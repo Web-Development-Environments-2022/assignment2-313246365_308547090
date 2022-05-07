@@ -1,6 +1,6 @@
-body{
+/* body{
     background:linear-gradient(to right,#99004D 0%,#ff0080 100%);
-}
+} */
 .welcome_button{
     
     width: 20%;
@@ -55,13 +55,12 @@ body{
   box-sizing: border-box;
   font-family: 'Poppins',sans-serif;
 }
-html, body{
+ html, body{
   display: grid;
   height: 100vh;
   width: 100%;
   place-items: center;
-  background: linear-gradient(to right, #99004d 0%, #ff0080 100%);
-}
+} 
 ::selection{
   background: #ff80bf;
 
@@ -161,3 +160,66 @@ html, body{
     background: linear-gradient(to right, #055a69 0%, #0baae9 100%);
   }
 
+.Menu{
+    background: #5a40ce;
+    font-family: "Sofia", sans-serif;
+}
+
+header {
+    width: 100%;
+    height: 90%;
+    margin-top: -10px;
+    padding: 30px;
+    text-align: center;
+    background: #5a40ce;
+    font-family: "Sofia", sans-serif;
+   
+}
+
+header a{
+    font-family: "Sofia", sans-serif;
+    transition: 0.3s ease;
+    background: #5a40ce;
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    border-top: 4px solid #5a40ce;
+    border-bottom: 4px solid #5a40ce;
+    padding: 20px;
+    margin: 20px;
+    
+}
+header a:hover {
+    border-top: 4px solid white;
+    border-bottom: 4px solid white;
+    padding: 6px 0;
+}
+#welcomeUser{
+    float: left;
+    padding-left:20px;
+    font-size: 50px;
+    font-family: "Sofia", sans-serif;
+}
+#logo{
+    float: left;
+    
+    margin-right: 50px;
+    margin-top: -30px;
+ 
+
+    
+}
+footer {
+    
+    padding: 24px;
+    text-align: center;
+    width: 100%;
+    font-family: Calibri;
+    background-color: #5a40ce;
+    height: 7%;
+    color: white;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

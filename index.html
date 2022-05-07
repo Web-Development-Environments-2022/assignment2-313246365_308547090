@@ -10,7 +10,28 @@
 
 
 	</head>
-
+	<title> Cake Eating Pacman </title>
+	<link rel = "icon" href = "images/TabIcon.jpg" type = "image/x-icon">
+	<style>
+		body {
+			background: url(images/background.jpg) no-repeat center center fixed;
+			background-size: 100% 100%
+		}
+	
+	</style>
+	<!------------------- menu ------------------->
+	<header class = "Menu">
+		<img id="logo" src="images/TabIcon.jpg" height="150" width="150">
+		<div id="welcomeUser" style="color: white;"> Welcome, guest!</div>
+		<a id="Home" onclick="displayPage('#home')">Home</a>
+		<a id="Login" onclick="displayPage('#login')">Login</a>
+		<a id="Register" onclick="displayPage('#register')">Register</a>
+		<a id="Settings" onclick="displayPage('#settings')">Settings</a>
+		<a id="About" onclick="openModal()">About</a>
+		<div id="names" classs = "welcomeUser" style="float: right; color: white; font-family: Sofia, sans-serif; "> Mor Levi & Meital Glick </div>
+		
+	</header>
+	
 	<body>
 
 		<div class= "page" id = "welcome_page"> 
@@ -102,7 +123,17 @@
 		 }
 		 </script>
  -->
-
-		  </body>
-		 </body>
+		<!------------------- footer ------------------->
+		<footer style="text-align: center; color: white;">
+			<p style="float: left;">Contact Us: </p>
+			<a class="text-uppercase">Mor Levi </a>
+			<a href="https://www.facebook.com/mor.levi.3766/">
+				<img id="facebook-logo" src="images/linkedin.png" width="35px" height="35px">
+			</a>
+			<a class="text-uppercase" style="margin-left: 30px">Meital Glick </a>
+			<a href="https://www.linkedin.com/">
+				<img id="linkedin-logo" src="images/linkedin.png" width="35px" height="35px">
+			</a>
+		</footer>
+	</body>
 </html>
