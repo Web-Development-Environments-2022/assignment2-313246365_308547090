@@ -7,6 +7,9 @@ var start_time;
 var time_elapsed;
 var interval;
 
+
+
+// 4- obstacle, 2- ball , 1- food , 3-
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
@@ -16,7 +19,7 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
-	var cnt = 100;
+	var cnt = 100; //??
 	var food_remain = 50;
 	var pacman_remain = 1;
 	start_time = new Date();
@@ -49,12 +52,15 @@ function Start() {
 			}
 		}
 	}
+
+	//food addition
 	while (food_remain > 0) {
 		var emptyCell = findRandomEmptyCell(board);
 		board[emptyCell[0]][emptyCell[1]] = 1;
 		food_remain--;
 	}
 	keysDown = {};
+
 	addEventListener(
 		"keydown",
 		function(e) {
@@ -97,6 +103,8 @@ function GetKeyPressed() {
 	}
 }
 
+
+//drawing the canvas, the player and the obstacle
 function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
