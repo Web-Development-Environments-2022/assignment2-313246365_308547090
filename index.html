@@ -3,19 +3,106 @@
 	<head>
 		<script src="./jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 	</head>
 
 	<body>
-		<div id="score">
-			<label for="lblScore">SCORE:</label>
+
+		<div class= "page" id = "welcome_page"> 
+			<button class = "welcome_button" type="button" onclick="show_registration()"> Register </button>
+			<button class = "welcome_button" type="button" onclick="show_login()"> Log In </button>
+		</div>
+
+
+												<!------ LOGIN PAGE ------>
+
+		<div class= "container" id = "login_page"> 
+			<form class = "form" action="#">  
+				<div class="title">Login</div>
+				<div class="input-box underline">
+				  <input id="username" type="text" placeholder="Enter Your username" required>
+				  <div class="underline"></div>
+				</div>
+				<div class="input-box">
+				  <input id="password" type="password" placeholder="Enter Your Password" required>
+				  <div class="underline"></div>
+				</div>
+				<div class="input-box button">
+				  <input type="submit" name="" value="Continue" onclick="CheckUser()">
+				</div>
+
+			  </form>
+			</form> 			
+		</div>
+
+
+<br>
+<br>
+
+												<!------ REGISTER PAGE ------>
+
+	<div class= "container" id = "register_page"> 
+		<form class = "form" action="#">  
+
+			<div class="title">Registration</div>
+			<div class="input-box underline">
+				<input id="username_r" type="text" placeholder="Enter Your username" required>
+				<div class="underline"></div>
+			</div>
+			<div class="input-box">
+				<input id="password_r" type="password" placeholder="Enter Your Password" required>
+				<div class="underline"></div>
+			</div>
+			<div class="input-box">
+				<input id="fullname_r" type="text" placeholder="Enter Your Full Name" required>
+				<div class="underline"></div>
+			</div>
+			<div class="input-box">
+				<input id="email_r" type="email" placeholder="Enter Your Email" required>
+				<div class="underline"></div>
+			</div>
+			<div class="input-box">
+				<input id="birthdate_r" type="date" placeholder="Enter Your Birthdate" required>
+				<div class="underline"></div>
+			</div>
+			<div class="input-box button">
+				<input type="submit" name="" value="Continue" onclick="RegisterUser()">
+			</div>
+
+			</form>
+		</form> 			
+	</div>
+
+
+		<br>
+		<br>
+		<div  id="score">
+			<label class = "welcome_button" for="lblScore">Score:</label>
 			<input id="lblScore" type="text" />
 		</div>
-		<div id="time">
-			<label for="lblTime">TIME:</label>
+		<div  id="time">
+			<label class = "welcome_button" for="lblTime">Time:</label>
 			<input id="lblTime" type="text" />
 		</div>
-		<div id="game">
+		<div  class= "page" id="game">
 			<canvas id="canvas" height="600" width="600"></canvas>
 		</div>
-	</body>
+		
+		
+		<!-- <script>
+
+		//to add
+		function show_login() {
+			document.getElementById('welcomeDiv').style.display = "block";
+		 }
+		 </script>
+ -->
+
+		  </body>
+		 </body>
 </html>

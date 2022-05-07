@@ -6,6 +6,8 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var users_list = [{username:"k",password:"k"}];
+
 
 
 
@@ -14,6 +16,49 @@ $(document).ready(function() {
 	context = canvas.getContext("2d");
 	Start();
 });
+
+
+function CheckUser(){
+	let username1= document.getElementById("username").value
+	let password1 = document.getElementById("password").value
+	let curr_user = {username: username1,password:password1}
+	let flag =0 
+	for (var i = 0; i < users_list.length; i++) {
+        
+            if ( users_list[i].username===username1 && users_list[i].password===password1){
+				flag =1
+			}
+        
+    }
+
+	if (flag===1){
+		//if valid -  start game - setting page
+		alert( "validation succeeded" );
+		//location.href="run.html";
+	}
+	else{
+		alert( "validation failed" );
+	}
+	
+	flag =0 
+
+}
+
+
+function RegisterUser(){
+	let username1= document.getElementById("username_r").value
+	let password1 = document.getElementById("password_r").value
+	let email1 = document.getElementById("email_r").value
+
+	let new_user={username: username1,password:password1}				
+	users_list.push(new_user)
+	console.log(users_list)
+	
+		//location.href="run.html";
+
+
+}
+
 
 function Start() {
 	board = new Array();
