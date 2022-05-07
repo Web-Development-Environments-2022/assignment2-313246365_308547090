@@ -1,0 +1,51 @@
+.Menu{
+    background: #5a40ce;
+}
+
+header {
+    margin-top: -10px;
+    padding: 30px;
+    text-align: center;
+    font-family: Calibri;
+    background: #5a40ce;
+}
+
+header a{
+    transition: 0.3s ease;
+    background: #5a40ce;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    border-top: 4px solid #5a40ce;
+    border-bottom: 4px solid #5a40ce;
+    padding: 20px;
+    margin: 20px;
+}
+header a:hover {
+    border-top: 4px solid white;
+    border-bottom: 4px solid white;
+    padding: 6px 0;
+}
+#welcomeUser{
+    float: left;
+    padding-left: 40px;
+}
+#logo{
+    float: left;
+    margin-right: 50px;
+    margin-top: -30px;
+}
+footer {
+    margin-bottom: -30px;
+    padding: 24px;
+    text-align: center;
+    width: 100%;
+    font-family: Calibri;
+    background-color: #5a40ce;
+    height: 7%;
+    color: white;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
