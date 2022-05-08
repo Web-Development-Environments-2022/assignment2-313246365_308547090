@@ -16,7 +16,8 @@ var balls_number
 // 4- obstacle, 2- ball , 1- food , 3-
 $(document).ready(function() {
 	context = canvas.getContext("2d");
-	Start();
+	show_welcome_page();
+	//Start();
 });
 
 
@@ -42,7 +43,8 @@ function CheckUser(){
 		alert( "validation failed" );
 	}
 	
-	flag =0 
+	flag =0
+	show_game_page()
 
 }
 
@@ -115,6 +117,63 @@ function Check_Settings(){
 
 }
 
+
+//SHOW FUNCTIONS
+
+
+function show_welcome_page() {
+	document.getElementById('welcome_page').style.display = "flex";
+	document.getElementById('register_page').style.display = "none";
+	document.getElementById('login_page').style.display = "none";
+	document.getElementById('settings_page').style.display = "none";
+	document.getElementById('game_page').style.display = "none";
+	//document.getElementById('about_page').style.display = "none";
+
+}
+
+function show_login_page() {
+	document.getElementById('welcome_page').style.display = "none";
+	document.getElementById('register_page').style.display = "none";
+	document.getElementById('login_page').style.display = "flex";
+	document.getElementById('settings_page').style.display = "none";
+	document.getElementById('game_page').style.display = "none";
+	//document.getElementById('about_page').style.display = "none";
+}
+
+function show_register_page() {
+	document.getElementById('welcome_page').style.display = "none";
+	document.getElementById('register_page').style.display = "flex";
+	document.getElementById('login_page').style.display = "none";
+	document.getElementById('settings_page').style.display = "none";
+	document.getElementById('game_page').style.display = "none";
+	//document.getElementById('about_page').style.display = "none";
+}
+function show_settings_page() {
+	document.getElementById('welcome_page').style.display = "none";
+	document.getElementById('register_page').style.display = "none";
+	document.getElementById('login_page').style.display = "none";
+	document.getElementById('settings_page').style.display = "flex";
+	document.getElementById('game_page').style.display = "none";
+	//document.getElementById('about_page').style.display = "none";
+}
+
+function show_game_page() {
+	document.getElementById('welcome_page').style.display = "none";
+	document.getElementById('register_page').style.display = "none";
+	document.getElementById('login_page').style.display = "none";
+	document.getElementById('settings_page').style.display = "none";
+	document.getElementById('game_page').style.display = "flex";
+	//document.getElementById('about_page').style.display = "none";
+}
+
+function show_about_page() {
+	document.getElementById('welcome_page').style.display = "none";
+	document.getElementById('register_page').style.display = "none";
+	document.getElementById('login_page').style.display = "none";
+	document.getElementById('settings_page').style.display = "none";
+	document.getElementById('game_page').style.display = "none";
+	document.getElementById('about_page').style.display = "flex";
+}
 
 function Start() {
 	board = new Array();

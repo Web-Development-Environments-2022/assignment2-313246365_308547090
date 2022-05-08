@@ -18,10 +18,11 @@
 
 .page{
 
-    position: relative;
+    display:flex;
     align-items: center;
     justify-content:center;
-    display:flex;
+    height: 80%;
+   
 }
 
 .page2{
@@ -56,10 +57,10 @@
   font-family: 'Poppins',sans-serif;
 }
  html, body{
-  display: grid;
+  /* display: grid; */
   height: 100vh;
   width: 100%;
-  place-items: center;
+  /* place-items: center; */
 } 
 ::selection{
   background: #ff80bf;
@@ -67,17 +68,59 @@
 }
 .container{
   background: #fff;
-  max-width: 432px;
-  width: 120%;
-  padding: 25px 30px;
+  /* max-width: 432px; */
+  width: 300px;
+  height: 320px;
+  
+  /* justify-content: space-between; */
   border-radius: 5px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+  /* margin: 50px 20px 20px 450px; */
+  margin-left: 40%;
+  margin-top: 10%;
+  padding-left: 40px;
+  align-items: center;
+  size: 300px;
+  
+    
 }
+
+.container_tall{
+    background: #fff;
+    /* max-width: 432px; */
+    width: 320px;
+    height: 600px;
+    /* justify-content: space-between; */
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+    /* margin: 50px 20px 20px 450px; */
+    margin-top: 5px;
+    padding-left: 50px;
+    align-items: center;
+    
+      
+  }
+
+  .container_tall_plus{
+    background: #fff;
+    /* max-width: 432px; */
+    width: 400px;
+    height: 700px;
+    /* justify-content: space-between; */
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+    /* margin: 50px 20px 20px 450px; */
+    margin-top: 5px;
+    padding-left: 20px;
+    align-items: center;
+    
+      
+  }
 .container form .title{
   font-size: 30px;
   font-weight: 600;
-  margin: 20px 0 10px 0;
-  position: relative;
+  /* margin: 10px 0 10px 0; */
+  position:relative;
 }
 .container form .title:before{
   content: '';
@@ -161,15 +204,17 @@
   }
 
 .Menu{
-    background: #5a40ce;
+    background-color: #5a40ce;
     font-family: "Sofia", sans-serif;
 }
 
 header {
     width: 100%;
-    height: 90%;
-    margin-top: -10px;
-    padding: 30px;
+    height:80px;
+    /* margin-top: -100px; */
+    /* padding: 30px; */
+    display: flex;
+    justify-content: space-around;
     text-align: center;
     background: #5a40ce;
     font-family: "Sofia", sans-serif;
@@ -186,7 +231,10 @@ header a{
     border-top: 4px solid #5a40ce;
     border-bottom: 4px solid #5a40ce;
     padding: 20px;
-    margin: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    /* margin: 20px; */
     
 }
 header a:hover {
@@ -202,27 +250,23 @@ header a:hover {
 }
 #logo{
     float: left;
-    
-    margin-right: 50px;
-    margin-top: -30px;
+    height:80px;
+    margin-left: 1%;
+
  
 
     
 }
 footer {
     
-    padding-bottom: 20px;
-    padding: 24px;
-    text-align: center;
     width: 100%;
     font-family: Calibri;
     background-color: #5a40ce;
-    height: 7%;
+    height: 50px;
     color: white;
-    overflow: hidden;
     position: fixed;
     bottom: 0;
-    width: 100%;
+
 }
 
 .arrow {
@@ -250,4 +294,5 @@ footer {
   .down {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
+   
   }

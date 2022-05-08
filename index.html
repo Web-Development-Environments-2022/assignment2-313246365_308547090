@@ -21,12 +21,22 @@
 	</style>
 	<!------------------- menu ------------------->
 	<header class = "Menu">
-		<img id="logo" src="images/TabIcon.jpg" height="150" width="150">
+		<!-- <img id="logo" src="images/TabIcon.jpg" height="150" width="150">
 		<div id="welcomeUser" style="color: white;"> Welcome, guest!</div>
 		<a id="Home" onclick="displayPage('#home')">Home</a>
 		<a id="Login" onclick="displayPage('#login')">Login</a>
 		<a id="Register" onclick="displayPage('#register')">Register</a>
 		<a id="Settings" onclick="displayPage('#settings')">Settings</a>
+		<a id="About" onclick="openModal()">About</a>
+		<div id="names" classs = "welcomeUser" style="float: right; color: white; font-family: Sofia, sans-serif; "> Mor Levi & Meital Glick </div>
+		 -->
+
+		<img id="logo" src="images/TabIcon.jpg" height="150" width="150">
+		<div id="welcomeUser" style="color: white;"> Welcome, guest!</div>
+		<a id="Home" onclick="show_welcome_page()">Home</a>
+		<a id="Login" onclick="show_login_page()">Login</a>
+		<a id="Register" onclick="show_register_page()">Register</a>
+		<a id="Settings" onclick="show_settings_page()">Settings</a>
 		<a id="About" onclick="openModal()">About</a>
 		<div id="names" classs = "welcomeUser" style="float: right; color: white; font-family: Sofia, sans-serif; "> Mor Levi & Meital Glick </div>
 		
@@ -35,8 +45,8 @@
 	<body>
 
 		<div class= "page" id = "welcome_page"> 
-			<button class = "welcome_button" type="button" onclick="show_registration()"> Register </button>
-			<button class = "welcome_button" type="button" onclick="show_login()"> Log In </button>
+			<button class = "welcome_button" type="button" onclick="show_register_page()" style="width:200px; height: 90px;"> Register </button>
+			<button class = "welcome_button" type="button" onclick="show_login_page()" style="width:200px; height: 90px;" > Log In </button>
 		</div>
 
 
@@ -67,7 +77,7 @@
 
 												<!------ REGISTER PAGE ------>
 
-	<div class= "container" id = "register_page"> 
+	<div class= "container container_tall" id = "register_page"> 
 		<form class = "form" action="#">  
 
 			<div class="title">Registration</div>
@@ -102,7 +112,7 @@
 
 													<!------ SETTINGS PAGE ------>
 
-	<div class= "container" id = "settings_page"> 
+	<div class= "container container_tall_plus" id = "settings_page"> 
 		<form class = "form" action="#">  
 
 			<div class="title">Settings</div>
@@ -154,6 +164,7 @@
 			</div>
 
 
+
 			<div class="input-box button">
 				<input id= "settings_continue_btn" type="submit" name="" value="Continue" onclick="Check_Settings()">
 			</div>
@@ -164,31 +175,26 @@
 
 		<br>
 		<br>
-		<div  id="score">
-			<label class = "welcome_button" for="lblScore">Score:</label>
-			<input id="lblScore" type="text" />
-		</div>
-		<div  id="time">
-			<label class = "welcome_button" for="lblTime">Time:</label>
-			<input id="lblTime" type="text" />
-		</div>
-		<div  class= "page" id="game">
-			<canvas id="canvas" height="600" width="600"></canvas>
+		<div  id="game_page">
+			<div  id="score">
+				<label class = "welcome_button" for="lblScore">Score:</label>
+				<input id="lblScore" type="text" />
+			</div>
+			<div  id="time">
+				<label class = "welcome_button" for="lblTime">Time:</label>
+				<input id="lblTime" type="text" />
+			</div>
+			<div  class= "page" id="game">
+				<canvas id="canvas" height="600" width="600"></canvas>
+			</div>
 		</div>
 		
 		
-		<!-- <script>
 
-		//to add
-		function show_login() {
-			document.getElementById('welcomeDiv').style.display = "block";
-		 }
-		 </script>
- -->
 		<!------------------- footer ------------------->
 		<footer style="text-align: center; color: white;">
-			<p style="float: left;">Contact Us: </p>
-			<a class="text-uppercase">Mor Levi </a>
+			<p style="display:inline;">Contact Us:    </p>
+			<a class="text-uppercase" style="margin-left: 30px">Mor Levi </a>
 			<a href="https://www.facebook.com/mor.levi.3766/">
 				<img id="facebook-logo" src="images/linkedin.png" style="margin-left: 3px" width="30px" height="30px">
 			</a>
