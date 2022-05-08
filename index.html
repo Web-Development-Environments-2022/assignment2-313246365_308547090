@@ -100,6 +100,68 @@
 	</div>
 
 
+													<!------ SETTINGS PAGE ------>
+
+	<div class= "container" id = "settings_page"> 
+		<form class = "form" action="#">  
+
+			<div class="title">Settings</div>
+<!-- 
+			<div class="input-box underline">
+				<input id="random_btn" type="checkbox" placeholder="Random keys and settings">
+				<div class="underline"></div>
+			</div> -->
+		
+			<div class="input-box underline">
+				<input id="right_key" placeholder="Enter key right" required onfocus="addEventListener"> 
+				<i class="arrow right"></i>
+				<div class="underline"></div>
+			</div>
+
+		
+			<div class="input-box">
+				<input id="left_key" type="text" placeholder="Enter key left" required>
+				<i class="arrow left"></i>
+				<div class="underline"></div>
+			</div>
+			<div class="input-box">
+				<input id="up_key" type="text" placeholder="Enter key up" required>
+				<i class="arrow up"></i>
+				<div class="underline"></div>
+			</div>
+			<div class="input-box">
+				<input id="down_key" type="text" placeholder="Enter key down" required>
+				<i class="arrow down"></i>
+				<div class="underline"></div>
+			</div>
+			
+			<div class="input-box">
+				<input id="balls_num" type="number" placeholder="Enter number of balls in the game (50-90)" required>
+				<i style="font-size:18px; color:rgb(234, 39, 169);">Balls Number</i> <br>
+				<div class="underline"></div>
+			</div>
+			
+			<div class="input-box">
+				<input id="time_num" type="number" placeholder="Enter maximum game time (minimum 60 seconds)" required>
+				<i style="font-size:18px; color:rgb(234, 39, 169);">Start Time</i> <br>
+				<div class="underline"></div>
+			</div>
+						
+			<div class="input-box">
+				<input id="monsters_num" type="number" placeholder="Enter amount of monsters (1-4)" required>
+				<i style="font-size:18px; color:rgb(234, 39, 169);" >Monsters Number</i> <br>
+				<div class="underline"></div>
+			</div>
+
+
+			<div class="input-box button">
+				<input id= "settings_continue_btn" type="submit" name="" value="Continue" onclick="Check_Settings()">
+			</div>
+
+			</form>
+		</form> 			
+	</div>
+
 		<br>
 		<br>
 		<div  id="score">
