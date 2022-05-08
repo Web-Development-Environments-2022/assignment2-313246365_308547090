@@ -205,13 +205,12 @@ header a:hover {
     
     margin-right: 50px;
     margin-top: -30px;
- 
-
     
 }
 footer {
     
     padding: 24px;
+    padding-bottom: 20px;
     text-align: center;
     width: 100%;
     font-family: Calibri;
