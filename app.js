@@ -7,6 +7,8 @@ var start_time;
 var time_elapsed;
 var interval;
 var users_list = [{username:"k",password:"k"}];
+var monsters_number
+var balls_number
 
 
 
@@ -46,15 +48,69 @@ function CheckUser(){
 
 
 function RegisterUser(){
-	let username1= document.getElementById("username_r").value
-	let password1 = document.getElementById("password_r").value
-	let email1 = document.getElementById("email_r").value
+	let username1=  $('#username_r').val()
+	let password1 = $('#password_r').val()
+	let fullname1 = $('#fullname_r').val()
+	let email1 =  $('#email_r').val()
+	let new_user={username: username1,password:password1}
+	
+	if (password1.length<6){
+		alert( "validation faild: password must be longer than 5 characters" );
+		return 
+	}
+	//if password is not containing letters and numbers
+	if (!(password1.match(/([a-zA-Z])/))|| (!password1.match(/([0-9])/)))
+	{
+		alert( "validation faild: password must contain letters and numbers" );
+		return 
+	}
 
-	let new_user={username: username1,password:password1}				
+	//if full name contain numbers
+	if (!fullname1.match(/([0-9])/))
+	{
+		alert( "validation faild: full name  must contain letters only" );
+		return 
+	}
+	
+
 	users_list.push(new_user)
 	console.log(users_list)
+
+	return
+
+}
+
+
+
+function Check_Settings(){
+	let monsters_num1=  $('#monsters_num').val()
+	let balls_num1 = $('#balls_num').val()
+	let time_num1 = $('#time_num').val()
+
+	//if password is not containing letters and numbers
+	if (balls_num1 <50|| balls_num1>90)
+	{
+		alert( "validation faild: balls number is out of range" );
+		return 
+	}
+
+	//if full name contain numbers
+	if (time_num1<60)
+	{
+		alert( "validation faild: game time is too short" );
+		return 
+	}
+
+	if (monsters_num1 <1 || monsters_num1 > 4){
+		alert( "validation faild: Number of monsters most be integer between 1-4" );
+		return 
+	}
 	
-		//location.href="run.html";
+	balls_number = balls_num1
+	start_time = time_num1
+	monsters_number =monsters_num1
+	console.log("settings are good")
+	return
 
 
 }
