@@ -58,10 +58,12 @@
 				<div class="input-box underline">
 				  <input id="username" type="text" placeholder="Enter Your username" required>
 				  <div class="underline"></div>
+				  <i style="font-size:18px; color:rgb(234, 39, 169);">Username</i> <br>
 				</div>
 				<div class="input-box">
 				  <input id="password" type="password" placeholder="Enter Your Password" required>
 				  <div class="underline"></div>
+				  <i style="font-size:18px; color:rgb(234, 39, 169);">Password</i> <br>
 				</div>
 				<div class="input-box button">
 				  <input type="submit" name="" value="Continue" onclick="CheckUser()">
@@ -84,22 +86,27 @@
 			<div class="input-box underline">
 				<input id="username_r" type="text" placeholder="Enter Your username" required>
 				<div class="underline"></div>
+				<i style="font-size:18px; color:rgb(234, 39, 169);">Username</i> <br>
 			</div>
 			<div class="input-box">
 				<input id="password_r" type="password" placeholder="Enter Your Password" required>
 				<div class="underline"></div>
+				<i style="font-size:18px; color:rgb(234, 39, 169);">Password</i> <br>
 			</div>
 			<div class="input-box">
 				<input id="fullname_r" type="text" placeholder="Enter Your Full Name" required>
 				<div class="underline"></div>
+				<i style="font-size:18px; color:rgb(234, 39, 169);">Full Name</i> <br>
 			</div>
 			<div class="input-box">
 				<input id="email_r" type="email" placeholder="Enter Your Email" required>
 				<div class="underline"></div>
+				<i style="font-size:18px; color:rgb(234, 39, 169);">Email</i> <br>
 			</div>
 			<div class="input-box">
 				<input id="birthdate_r" type="date" placeholder="Enter Your Birthdate" required>
 				<div class="underline"></div>
+				<i style="font-size:18px; color:rgb(234, 39, 169);">Birth Date</i> <br>
 			</div>
 			<div class="input-box button">
 				<input type="submit" name="" value="Continue" onclick="RegisterUser()">
@@ -121,30 +128,48 @@
 				<input id="random_btn" type="checkbox" placeholder="Random keys and settings">
 				<div class="underline"></div>
 			</div> -->
-		
+			<br>
+			<i style="font-size:18px; color:rgb(146, 39, 234);">Choose keboard keys according <br> to the sign direction: </i>
 			<div class="input-box underline">
-				<input id="right_key" placeholder="Enter key right" required onfocus="addEventListener"> 
+				<input id="right_key" type = "button" placeholder="Enter key right" required onkeydown="SetKeyCode(event, 'RIGHT')"> 
 				<i class="arrow right"></i>
 				<div class="underline"></div>
 			</div>
+			<br>
 
 		
 			<div class="input-box">
-				<input id="left_key" type="text" placeholder="Enter key left" required>
+				<input id="left_key" type = "button" placeholder="Enter key left" required onkeydown="SetKeyCode(event, 'LEFT')" >
 				<i class="arrow left"></i>
 				<div class="underline"></div>
 			</div>
+			<br>
+
 			<div class="input-box">
-				<input id="up_key" type="text" placeholder="Enter key up" required>
+				<input id="up_key" type = "button" placeholder="Enter key up" required onkeydown="SetKeyCode(event, 'UP')">
 				<i class="arrow up"></i>
 				<div class="underline"></div>
 			</div>
+			<br>
+
 			<div class="input-box">
-				<input id="down_key" type="text" placeholder="Enter key down" required>
+				<input id="down_key" type = "button" placeholder="Enter key down" required onkeydown="SetKeyCode(event, 'DOWN')">
 				<i class="arrow down"></i>
 				<div class="underline"></div>
 			</div>
+			<br>
 			
+			
+			
+			<i style="font-size:18px; color:rgb(146, 39, 234);">Pick color for 5 points ball : </i> 
+			<input type="color" value="#fb473" id="ball5_color" /><br>
+			<i style="font-size:18px; color:rgb(146, 39, 234);">Pick color for 15 points ball : </i> 
+			<input type="color" value="#951491" id="ball15_color" /><br>
+			<i style="font-size:18px; color:rgb(146, 39, 234);">Pick color for 25 points ball : </i> 
+			<input type="color" value="#2df0f8" id="ball25_color" /><br>
+
+
+
 			<div class="input-box">
 				<input id="balls_num" type="number" placeholder="Enter number of balls in the game (50-90)" required>
 				<i style="font-size:18px; color:rgb(234, 39, 169);">Balls Number</i> <br>
@@ -163,10 +188,12 @@
 				<div class="underline"></div>
 			</div>
 
-
+			<div class="input-box button">
+				<input id= "settings_random_btn" type="submit" name="" value="Random" onclick="Random()" style="background: linear-gradient(to right, #04849b 0%, #5ee9ee 100%);" >
+			</div>
 
 			<div class="input-box button">
-				<input id= "settings_continue_btn" type="submit" name="" value="Continue" onclick="Check_Settings()">
+				<input id= "settings_continue_btn" type="submit" name="" value="Start Game!" onclick="Check_Settings()">
 			</div>
 
 			</form>
@@ -176,14 +203,18 @@
 		<br>
 		<br>
 		<div  id="game_page">
+			<div id="score_time">
 			<div  id="score">
-				<label class = "welcome_button" for="lblScore">Score:</label>
-				<input id="lblScore" type="text" />
+				<label class = "game_field" for="lblScore">Score:</label>
+				<input class = "game_data" id="lblScore" type="text" />
 			</div>
+			<br>
 			<div  id="time">
-				<label class = "welcome_button" for="lblTime">Time:</label>
-				<input id="lblTime" type="text" />
+				<label class = "game_field" for="lblTime">Time:</label>
+				<input class = "game_data" id="lblTime" type="text" />
 			</div>
+		</div>
+			<br>
 			<div  class= "page" id="game">
 				<canvas id="canvas" height="600" width="600"></canvas>
 			</div>

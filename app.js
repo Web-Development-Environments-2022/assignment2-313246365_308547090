@@ -9,6 +9,10 @@ var interval;
 var users_list = [{username:"k",password:"k"}];
 var monsters_number
 var balls_number
+var up_key
+var down_key
+var right_key
+var left_key
 
 
 
@@ -20,7 +24,7 @@ $(document).ready(function() {
 	//Start();
 });
 
-
+//========================== functions to header  ===========================
 function CheckUser(){
 	let username1= document.getElementById("username").value
 	let password1 = document.getElementById("password").value
@@ -38,13 +42,14 @@ function CheckUser(){
 		//if valid -  start game - setting page
 		alert( "validation succeeded" );
 		//location.href="run.html";
+		show_settings_page()
 	}
 	else{
 		alert( "validation failed" );
+		show_login_page();
 	}
 	
 	flag =0
-	show_game_page()
 
 }
 
@@ -63,12 +68,12 @@ function RegisterUser(){
 	//if password is not containing letters and numbers
 	if (!(password1.match(/([a-zA-Z])/))|| (!password1.match(/([0-9])/)))
 	{
-		alert( "validation faild: password must contain letters and numbers" );
+		alert( "validation faild: password must contain  English letters and numbers only" );
 		return 
 	}
 
 	//if full name contain numbers
-	if (!fullname1.match(/([0-9])/))
+	if (fullname1.match(/([0-9])/))
 	{
 		alert( "validation faild: full name  must contain letters only" );
 		return 
@@ -77,6 +82,7 @@ function RegisterUser(){
 
 	users_list.push(new_user)
 	console.log(users_list)
+	show_login_page()
 
 	return
 
@@ -112,13 +118,16 @@ function Check_Settings(){
 	start_time = time_num1
 	monsters_number =monsters_num1
 	console.log("settings are good")
+
+	show_game_page()
+	Start()
 	return
 
 
 }
 
 
-//SHOW FUNCTIONS
+//=========== SHOW FUNCTIONS ====================
 
 
 function show_welcome_page() {
@@ -175,6 +184,10 @@ function show_about_page() {
 	document.getElementById('about_page').style.display = "flex";
 }
 
+
+
+
+//===================================== Start Game ===============================
 function Start() {
 	board = new Array();
 	score = 0;
@@ -196,6 +209,9 @@ function Start() {
 			) {
 				board[i][j] = 4;
 			} else {
+
+				//balls?
+				
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					food_remain--;
@@ -247,21 +263,94 @@ function findRandomEmptyCell(board) {
 	}
 	return [i, j];
 }
+//=================== KEYS DEFINITION ==================
+
+function SetKeyCode(event1,key_type){
+
+	if(key_type === "RIGHT"){
+		right_key = event1.keyCode;
+		document.getElementById('right_key').value = event1.key;
+	}
+
+	if(key_type === "LEFT"){
+		left_key = event1.keyCode;
+		document.getElementById('left_key').value  = event1.key;
+	}
+	if(key_type === "UP"){
+		up_key = event1.keyCode;
+		document.getElementById('up_key').value  = event1.key;
+	}
+	if(key_type === "DOWN"){
+		down_key = event1.keyCode;
+		document.getElementById('down_key').value  = event1.key;
+	}
+}
 
 function GetKeyPressed() {
-	if (keysDown[38]) {
+	if (keysDown[up_key]) {
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (keysDown[down_key]) {
 		return 2;
 	}
-	if (keysDown[37]) {
+	if (keysDown[left_key]) {
 		return 3;
 	}
-	if (keysDown[39]) {
+	if (keysDown[right_key]) {
 		return 4;
 	}
 }
+
+
+function Random(){
+
+	let min = 50;
+	let max= 90;
+	
+	//random keys
+	right_key = 37 ;
+	document.getElementById('right_key').value = "Arrow Right";
+
+
+	left_key = 39;
+	document.getElementById('left_key').value  = "Arrow Left";
+	
+
+	up_key = 38;
+	document.getElementById('up_key').value  = "Arrow UP";
+	
+
+	down_key = 40;
+	document.getElementById('down_key').value  = "Arrow Down";
+
+	//random  balls
+	document.getElementById('balls_num').value  = Math.floor(min + Math.random()*(max-min));
+	//random time
+	min=60
+	max = 3000
+	document.getElementById('time_num').value  = Math.floor(min + Math.random()*(max-min));
+
+	//random monsters
+	min= 1
+	max = 4
+	document.getElementById('monsters_num').value  = Math.floor(min + Math.random()*(max-min));
+	
+	//RANDOM COLORS
+	document.getElementById('ball5_color').value  = getRandomColor();
+	document.getElementById('ball15_color').value  = getRandomColor();
+	document.getElementById('ball25_color').value  = getRandomColor();
+
+}
+
+
+function getRandomColor() {
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++) {
+	  color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+  }
 
 
 //drawing the canvas, the player and the obstacle
@@ -274,6 +363,8 @@ function Draw() {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
+
+			//packman?
 			if (board[i][j] == 2) {
 				context.beginPath();
 				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
@@ -281,14 +372,20 @@ function Draw() {
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
+
+				//eye
 				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
+
+				//ball??
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
 				context.fillStyle = "black"; //color
 				context.fill();
+
+				//wall
 			} else if (board[i][j] == 4) {
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
