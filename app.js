@@ -2,6 +2,7 @@ var context;
 var shape = new Object();
 var board;
 var score;
+let lives;
 var pac_color;
 var start_time;
 var time_elapsed;
@@ -191,9 +192,13 @@ function show_about_page() {
 function Start() {
 	board = new Array();
 	score = 0;
+	lives = 3;
 	pac_color = "yellow";
 	var cnt = 100; //??
-	var food_remain = 50;
+	let food_remain = document.getElementById("balls_num").value;
+	let food5_remain = 0.6 * food_remain;
+	let food15_remain = 0.3 * food_remain;
+	let food25_remain = 0.1 * food_remain;
 	var pacman_remain = 1;
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
