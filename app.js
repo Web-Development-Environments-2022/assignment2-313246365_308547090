@@ -1,32 +1,21 @@
-let context;
+var context;
 var shape = new Object();
-let board;
-let boardSize = 20;
-let score;
-let lives;
+var board;
+var score;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
 var users_list = [{username:"k",password:"k"}];
-let monsters_number;
-var balls_number;
-var up_key;
-var down_key;
-var right_key;
-var left_key;
+var monsters_number
+var balls_number
+var up_key
+var down_key
+var right_key
+var left_key
+let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
 
-const emptycell = 0;
-const food5 = 1;
-const food15 = 2;
-const food25 = 3;
-const wall = 4;
-const pacman = 5;
-const monster1 = 6;
-const monster2 = 7;
-const monster3 = 8;
-let GameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
-let PacmanPlace = {};
+
 
 
 // 4- obstacle, 2- ball , 1- food , 3-
@@ -41,7 +30,7 @@ function CheckUser(){
 	let username1= document.getElementById("username").value
 	let password1 = document.getElementById("password").value
 	let curr_user = {username: username1,password:password1}
-	let flag = 0 
+	let flag =0 
 	for (var i = 0; i < users_list.length; i++) {
         
             if ( users_list[i].username===username1 && users_list[i].password===password1){
@@ -54,17 +43,21 @@ function CheckUser(){
 		//if valid -  start game - setting page
 		alert( "validation succeeded" );
 		//location.href="run.html";
-		show_settings_page()
+		show_settings_page();
+		ChangeWelcomeUser(username1);
 	}
 	else{
 		alert( "validation failed" );
 		show_login_page();
 	}
 	
-	flag = 0
+	flag =0
 
 }
 
+function ChangeWelcomeUser(username){ //Change guest to username
+	document.getElementById('welcomeUser').innerText = "welcome back, " + username + "!";
+}
 
 function RegisterUser(){
 	let username1=  $('#username_r').val()
@@ -80,7 +73,7 @@ function RegisterUser(){
 	//if password is not containing letters and numbers
 	if (!(password1.match(/([a-zA-Z])/))|| (!password1.match(/([0-9])/)))
 	{
-		alert( "validation failed: password must contain English letters and numbers only" );
+		alert( "validation failed: password must contain  English letters and numbers only" );
 		return 
 	}
 
@@ -143,6 +136,8 @@ function Check_Settings(){
 
 
 function show_welcome_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "flex";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -153,6 +148,8 @@ function show_welcome_page() {
 }
 
 function show_login_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "flex";
@@ -162,6 +159,8 @@ function show_login_page() {
 }
 
 function show_register_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "flex";
 	document.getElementById('login_page').style.display = "none";
@@ -170,6 +169,8 @@ function show_register_page() {
 	//document.getElementById('about_page').style.display = "none";
 }
 function show_settings_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -179,6 +180,8 @@ function show_settings_page() {
 }
 
 function show_game_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -188,6 +191,8 @@ function show_game_page() {
 }
 
 function show_about_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -196,34 +201,44 @@ function show_about_page() {
 	document.getElementById('about_page').style.display = "flex";
 }
 
+// ===================================== Objects creation ===========================
+
+// function createMonster(){
+
+// }
+
+// function createClock(){
+
+// }
+
+// function createBall{
+
+// }
+
+// function createCake{
+
+// }
+
+
 
 
 
 //===================================== Start Game ===============================
 function Start() {
-	GameMusic.loop = true;
 	board = new Array();
 	score = 0;
 	lives = 3;
+	gameMusic.loop = true;
 	pac_color = "yellow";
 	var cnt = 100; //??
-	//ShowSettings(); //Show chosen settings while in game screen
-	let food_remain = document.getElementById("balls_num").value;
-	let monsters_number = document.getElementById('monsters_num').value;
-	let food_remain_5 = 0.6 * food_remain;
-	let food_remain_15 = 0.3 * food_remain;
-	let food_remain_25 = 0.1 * food_remain;
+	var food_remain = 50;
 	var pacman_remain = 1;
 	start_time = new Date();
-	for (var i = 0; i < boardSize; i++) {
+	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < boardSize-4; j++) {
+		for (var j = 0; j < 10; j++) {
 			if (
-				(i === 0) ||
-				(j === 0) ||
-				(i === boardSize-1) ||
-				(j === boardSize-5) ||
 				(i == 3 && j == 3) ||
 				(i == 3 && j == 4) ||
 				(i == 3 && j == 5) ||
@@ -234,6 +249,7 @@ function Start() {
 			} else {
 
 				//balls?
+				
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					food_remain--;
@@ -257,15 +273,6 @@ function Start() {
 		board[emptyCell[0]][emptyCell[1]] = 1;
 		food_remain--;
 	}
-
-	// AddFood(food5, food_remain_5);
-	// AddFood(food15, food_remain_15);
-	// AddFood(food25, food_remain_25);
-	// PlacePacman();
-	// AddMonsters();
-	// PlaceMovingBonus();
-
-
 	keysDown = {};
 
 	addEventListener(
@@ -282,34 +289,14 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 250); // כל כמה זמן הדברים יזוזו בלוח
+	interval = setInterval(UpdatePosition, 250);
+	gameMusic.play();
 }
 
-//food addition
-// function AddFood(foodtype, quantity){
-// 	while (quantity > 0) {
-// 		let emptyCell = findRandomEmptyCell(board);
-// 		board[emptyCell[0]][emptyCell[1]] = foodtype;
-// 		quantity--;
-// 	}
-// }
-
-// function placePacman(){
-// 	let place = findRandomEmptyCell();
-// 	PacmanPlace.i = place[0];
-// 	PacmanPlace.j = place[1];
-// 	board[PacmanPlace.i][PacmanPlace.j] = pacman;
-// }
-
-// function findRandomEmptyCell() {
-// 	var i = Math.floor(Math.random() * board.length);
-// 	var j = Math.floor(Math.random() * board.length);
-// 	while (board[i][j] != emptycell) {
-// 		i = Math.floor(Math.random() * board.length);
-// 		j = Math.floor(Math.random() * board.length);
-// 	}
-// 	return [i, j];
-// }
+function Stop(){ //Stop game 
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
+}
 
 function findRandomEmptyCell(board) {
 	var i = Math.floor(Math.random() * 9 + 1);
@@ -358,7 +345,7 @@ function GetKeyPressed() {
 	}
 }
 
-//======================== Random ======================
+
 function Random(){
 
 	let min = 50;
@@ -421,7 +408,7 @@ function Draw() {
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 
-			//pacman?
+			//packman?
 			if (board[i][j] == 2) {
 				context.beginPath();
 				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
