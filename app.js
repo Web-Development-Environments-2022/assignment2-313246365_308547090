@@ -2,11 +2,13 @@ var context;
 var shape = new Object();
 var board;
 var score;
+var lives;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
 var users_list = [{username:"k",password:"k"}];
+let curr_user = {};
 var monsters_number
 var balls_number
 var up_key
@@ -14,8 +16,6 @@ var down_key
 var right_key
 var left_key
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
-
-
 
 
 // 4- obstacle, 2- ball , 1- food , 3-
@@ -26,15 +26,15 @@ $(document).ready(function() {
 });
 
 //========================== functions to header  ===========================
-function CheckUser(){
+function CheckUser(){ //login
 	let username1= document.getElementById("username").value
 	let password1 = document.getElementById("password").value
-	let curr_user = {username: username1,password:password1}
-	let flag =0 
+	curr_user = {username: username1,password:password1}
+	let flag = 0 
 	for (var i = 0; i < users_list.length; i++) {
         
             if ( users_list[i].username===username1 && users_list[i].password===password1){
-				flag =1
+				flag = 1
 			}
         
     }
@@ -169,14 +169,17 @@ function show_register_page() {
 	//document.getElementById('about_page').style.display = "none";
 }
 function show_settings_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
-	document.getElementById('welcome_page').style.display = "none";
-	document.getElementById('register_page').style.display = "none";
-	document.getElementById('login_page').style.display = "none";
-	document.getElementById('settings_page').style.display = "flex";
-	document.getElementById('game_page').style.display = "none";
-	//document.getElementById('about_page').style.display = "none";
+	if (Object.keys(curr_user).length !== 0){
+		gameMusic.pause();
+		gameMusic.currentTime = 0;
+		document.getElementById('welcome_page').style.display = "none";
+		document.getElementById('register_page').style.display = "none";
+		document.getElementById('login_page').style.display = "none";
+		document.getElementById('settings_page').style.display = "flex";
+		document.getElementById('game_page').style.display = "none";
+		//document.getElementById('about_page').style.display = "none";
+	}
+	
 }
 
 function show_game_page() {
@@ -402,6 +405,7 @@ function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	lblLives.value = lives;
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
