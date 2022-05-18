@@ -307,7 +307,7 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
-	gameMusic.play();
+	// gameMusic.play();
 }
 
 function Stop(){ //Stop game 
@@ -369,11 +369,11 @@ function Random(){
 	let max= 90;
 	
 	//random keys
-	right_key = 37 ;
+	right_key = 39;
 	document.getElementById('right_key').value = "Arrow Right";
 
 
-	left_key = 39;
+	left_key = 37;
 	document.getElementById('left_key').value  = "Arrow Left";
 	
 
@@ -503,7 +503,7 @@ function DisplaySettings(){
 	left_key_pick = document.getElementById('left_key').value;
 	up_key_pick = document.getElementById('up_key').value;
 	down_key_pick = document.getElementById('down_key').value;
-
+	console.log(right_key_pick);
 	balls_num_pick = document.getElementById('balls_num').value;
 	time_num_pick = document.getElementById('time_num').value;
 	monsters_num_pick = document.getElementById('monsters_num').value;
@@ -512,10 +512,11 @@ function DisplaySettings(){
 	ball15_color_pick = document.getElementById('ball15_color').value;
 	ball25_color_pick = document.getElementById('ball25_color').value;
 
-	$("#keyRightDisplay").text(right_key_pick);
-	$("#keyLeftDisplay").text(left_key_pick);
-	$("#keyUpDisplay").text(up_key_pick);
-	$("#keyDownDisplay").text(down_key_pick);
+	$("#KeyRightDisplay").text(right_key_pick);
+	// document.getElementById('keyRightDisplay').value = right_key_pick;
+	$("#KeyLeftDisplay").text(left_key_pick);
+	$("#KeyUpDisplay").text(up_key_pick);
+	$("#KeyDownDisplay").text(down_key_pick);
 
 	$("#ballsNum").text(balls_num_pick);
 	$("#gametime").text(time_num_pick);
