@@ -22,22 +22,16 @@
 }
 
 .page{
-
     display:flex;
     align-items: center;
     justify-content:center;
-   
-   
 }
 
 .page2{
-
     position: relative;
     align-items: center;
     justify-content:center;
     margin-left: 40%;
-    
-    
 }
 
 .form{
@@ -45,12 +39,10 @@
     font-weight: bold;
     align-items: center;
     justify-content:center;
-
 }
 
 .form_field{
     border-style:dashed;
-
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
@@ -250,7 +242,7 @@ header a:hover {
 #welcomeUser{
     float: left;
     padding-left:20px;
-    font-size: 50px;
+    font-size: 150%;
     font-family: "Sofia", sans-serif;
 }
 #logo{
@@ -308,19 +300,57 @@ footer {
   .game_field{
     width: 100px;
     height:50px;
-    border-radius: 15px;
+    border-radius: 50px;
     background:rgb(207, 237, 245);
     /* padding: 520px 20px,20px,20px; */
     font-size: 30px;
     font-family: "Sofia", sans-serif;
     justify-content: center;
     display:flex;
+    left: 10px;
+    position: relative;
   }
 
   .game_data{
-
+    position: relative;
+    left: 10px;
     width: 180px;
   }
+
+  .displaysettings{
+    font-size: 20px;
+    font-family: "Sofia", sans-serif;
+    color: black;
+  }
+
+  .PointsDisplay{
+    font-size: 20px;
+    font-family: "Sofia", sans-serif;
+  }
+
+  #newGameButton{
+    width: 40%;
+    height: 40%;
+  }
+
+  #gamesettings{
+    background: white;
+    /* max-width: 432px; */
+    width: 300px;
+    height: 320px;
+    
+    /* justify-content: space-between; */
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+    /* margin: 50px 20px 20px 450px;
+    margin-left: 40%;
+    margin-top: 10%; */
+    /* padding-left: 40px; */
+    align-items: center;
+    size: 300px;
+
+  }
+
 
   
 

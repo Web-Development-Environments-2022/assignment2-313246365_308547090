@@ -2,11 +2,13 @@ var context;
 var shape = new Object();
 var board;
 var score;
+var lives;
 var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
 var users_list = [{username:"k",password:"k"}];
+let curr_user = {};
 var monsters_number
 var balls_number
 var up_key
@@ -24,9 +26,20 @@ var width;
 var clock_remain = true;
 var clock_obj;
 
+let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
+let winMusic = new Audio('./audio/Win.mp3');
 
-
-
+//Real value for variables after pick or random
+let right_key_pick;
+let left_key_pick;
+let up_key_pick;
+let down_key_pick;
+let balls_num_pick;
+let time_num_pick;
+let monsters_num_pick;
+let ball5_color_pick;
+let ball15_color_pick;
+let ball25_color_pick; 
 
 
 // 4- obstacle, 2- ball , 1- food , 3-
@@ -50,15 +63,15 @@ $(document).ready(function() {
 
 //time_elapsed = document.getElementById("time_num).value
 //========================== functions to header  ===========================
-function CheckUser(){
+function CheckUser(){ //login
 	let username1= document.getElementById("username").value
 	let password1 = document.getElementById("password").value
-	let curr_user = {username: username1,password:password1}
-	let flag =0 
+	curr_user = {username: username1,password:password1}
+	let flag = 0 
 	for (var i = 0; i < users_list.length; i++) {
         
             if ( users_list[i].username===username1 && users_list[i].password===password1){
-				flag =1
+				flag = 1
 			}
         
     }
@@ -67,7 +80,8 @@ function CheckUser(){
 		//if valid -  start game - setting page
 		alert( "validation succeeded" );
 		//location.href="run.html";
-		show_settings_page()
+		show_settings_page();
+		ChangeWelcomeUser(username1);
 	}
 	else{
 		alert( "validation failed" );
@@ -78,6 +92,9 @@ function CheckUser(){
 
 }
 
+function ChangeWelcomeUser(username){ //Change guest to username
+	document.getElementById('welcomeUser').innerText = "welcome back, " + username + "!";
+}
 
 function RegisterUser(){
 	let username1=  $('#username_r').val()
@@ -87,20 +104,20 @@ function RegisterUser(){
 	let new_user={username: username1,password:password1}
 	
 	if (password1.length<6){
-		alert( "validation faild: password must be longer than 5 characters" );
+		alert( "validation failed: password must be longer than 5 characters" );
 		return 
 	}
 	//if password is not containing letters and numbers
 	if (!(password1.match(/([a-zA-Z])/))|| (!password1.match(/([0-9])/)))
 	{
-		alert( "validation faild: password must contain  English letters and numbers only" );
+		alert( "validation failed: password must contain  English letters and numbers only" );
 		return 
 	}
 
 	//if full name contain numbers
 	if (fullname1.match(/([0-9])/))
 	{
-		alert( "validation faild: full name  must contain letters only" );
+		alert( "validation failed: full name  must contain letters only" );
 		return 
 	}
 	
@@ -123,19 +140,19 @@ function Check_Settings(){
 	//if password is not containing letters and numbers
 	if (balls_num1 <50|| balls_num1>90)
 	{
-		alert( "validation faild: balls number is out of range" );
+		alert( "validation failed: balls number is out of range" );
 		return 
 	}
 
 	//if full name contain numbers
 	if (time_num1<60)
 	{
-		alert( "validation faild: game time is too short" );
+		alert( "validation failed: game time is too short" );
 		return 
 	}
 
 	if (monsters_num1 <1 || monsters_num1 > 4){
-		alert( "validation faild: Number of monsters most be integer between 1-4" );
+		alert( "validation failed: Number of monsters most be integer between 1-4" );
 		return 
 	}
 	
@@ -156,6 +173,8 @@ function Check_Settings(){
 
 
 function show_welcome_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "flex";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -166,6 +185,8 @@ function show_welcome_page() {
 }
 
 function show_login_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "flex";
@@ -175,6 +196,8 @@ function show_login_page() {
 }
 
 function show_register_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "flex";
 	document.getElementById('login_page').style.display = "none";
@@ -183,15 +206,22 @@ function show_register_page() {
 	//document.getElementById('about_page').style.display = "none";
 }
 function show_settings_page() {
-	document.getElementById('welcome_page').style.display = "none";
-	document.getElementById('register_page').style.display = "none";
-	document.getElementById('login_page').style.display = "none";
-	document.getElementById('settings_page').style.display = "flex";
-	document.getElementById('game_page').style.display = "none";
-	//document.getElementById('about_page').style.display = "none";
+	if (Object.keys(curr_user).length !== 0){
+		gameMusic.pause();
+		gameMusic.currentTime = 0;
+		document.getElementById('welcome_page').style.display = "none";
+		document.getElementById('register_page').style.display = "none";
+		document.getElementById('login_page').style.display = "none";
+		document.getElementById('settings_page').style.display = "flex";
+		document.getElementById('game_page').style.display = "none";
+		//document.getElementById('about_page').style.display = "none";
+	}
+	
 }
 
 function show_game_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -201,6 +231,8 @@ function show_game_page() {
 }
 
 function show_about_page() {
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -304,8 +336,11 @@ function placeBalls(board){
 
 //===================================== Start Game ===============================
 function Start() {
+	DisplaySettings();
 	board = new Array();
 	score = 0;
+	lives = 3;
+	gameMusic.loop = true;
 	pac_color = "yellow";
 	var cnt = 100; //??
 	var food_remain = balls_number;
@@ -405,6 +440,12 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
+	// gameMusic.play();
+}
+
+function Stop(){ //Stop game 
+	gameMusic.pause();
+	gameMusic.currentTime = 0;
 }
 
 function findRandomEmptyCell(board) {
@@ -513,8 +554,10 @@ function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	lblLives.value = lives;
 	for (var i = 0; i < rows; i++) {
 		for (var j = 0; j < cols; j++) {
+			
 			var center = new Object();
 			center.x = i * width + width/2;
 			center.y = j * height + height/2;
@@ -646,4 +689,33 @@ function UpdatePosition() {
 	} else {
 		Draw();
 	}
+}
+
+function DisplaySettings(){
+	right_key_pick = document.getElementById('right_key').value;
+	left_key_pick = document.getElementById('left_key').value;
+	up_key_pick = document.getElementById('up_key').value;
+	down_key_pick = document.getElementById('down_key').value;
+	console.log(right_key_pick);
+	balls_num_pick = document.getElementById('balls_num').value;
+	time_num_pick = document.getElementById('time_num').value;
+	monsters_num_pick = document.getElementById('monsters_num').value;
+
+	ball5_color_pick = document.getElementById('ball5_color').value;
+	ball15_color_pick = document.getElementById('ball15_color').value;
+	ball25_color_pick = document.getElementById('ball25_color').value;
+
+	$("#KeyRightDisplay").text(right_key_pick);
+	// document.getElementById('keyRightDisplay').value = right_key_pick;
+	$("#KeyLeftDisplay").text(left_key_pick);
+	$("#KeyUpDisplay").text(up_key_pick);
+	$("#KeyDownDisplay").text(down_key_pick);
+
+	$("#ballsNum").text(balls_num_pick);
+	$("#gametime").text(time_num_pick);
+	$("#monstersNum").text(monsters_num_pick);
+
+	document.getElementById('color5').style.color = ball5_color_pick;
+	document.getElementById('color15').style.color = ball15_color_pick;
+	document.getElementById('color25').style.color = ball25_color_pick;
 }
