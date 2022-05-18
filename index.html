@@ -191,28 +191,56 @@
 		</form> 			
 	</div>
 
-		<br>
+															<!------ GAME PAGE ------>
 		<br>
 		<div  id="game_page">
 			<div id="score_time">
-			<div  id="score">
-				<label class = "game_field" for="lblScore">Score:</label>
-				<input class = "game_data" id="lblScore" type="text" />
+				<div  id="score">
+					<label class = "game_field" for="lblScore">Score:</label>
+					<input class = "game_data" id="lblScore" type="text" />
+				</div>
+				<br>
+				<div  id="time">
+					<label class = "game_field" for="lblTime">Time:</label>
+					<input class = "game_data" id="lblTime" type="text" />
+				</div>
+				<br>
+				<div  id="lives">
+					<label class = "game_field" for="lblLives">Lives:</label>
+					<input class = "game_data" id="lblLives" type="text" />
+				</div>
 			</div>
-			<br>
-			<div  id="time">
-				<label class = "game_field" for="lblTime">Time:</label>
-				<input class = "game_data" id="lblTime" type="text" />
-			</div>
-			<br>
-			<div  id="lives">
-				<label class = "game_field" for="lblLives">Lives:</label>
-				<input class = "game_data" id="lblLives" type="text" />
-			</div>
-		</div>
 			<br>
 			<div  class= "page" id="game">
 				<canvas id="canvas" height="600" width="600"></canvas>
+			</div>
+			<div id="gamesettings">
+				<table id="settingstable">
+					<tr>
+						<td colspan="2"><label class="displaysettings">Up Key: <label id="KeyUpDisplay" aria-readonly="true"></label></label></td>
+						<td colspan="2"><label class="displaysettings">Down Key: <label id="KeyDownDisplay" aria-readonly="true"></label></label></td>
+					</tr>
+					<tr>
+						<td colspan="2"><label class="displaysettings">Left Key: <label id="KeyLeftDisplay" aria-readonly="true"></label></label></td>
+						<td colspan="2"><label class="displaysettings">Right Key: <label id="KeyRightDisplay" aria-readonly="true"></label></label></td>
+					</tr>
+					<tr>
+						<td colspan="3"><label class="displaysettings">Number of balls: <label id="ballsNum" aria-readonly="true"></label></label></td>
+					</tr>
+					<tr>
+						<td colspan="3"><label class="displaysettings">Number of monsters: <label id="monstersNum" aria-readonly="true"></label></label></td>
+					</tr>
+					<tr>
+						<td colspan="3"><label class="displaysettings">Total game time: <label id="gametime" aria-readonly="true"></label></label></td>
+					</tr>
+					<tr><td><label class="displaysettings">Balls' Colors:</label></td></tr>
+					<tr><td><label id="color5" class="PointsDisplay">5 Points</label></td></tr>
+					<tr><td><label id="color15" class="PointsDisplay">15 Points</label></td></tr>
+					<tr><td><label id="color25" class="PointsDisplay">25 Points</label></td></tr>
+					<tr>
+						<td colspan="3"><input id="newGameButton" type="button" value="New Game" onclick="show_settings_page()"/></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 		
@@ -220,14 +248,15 @@
 
 		<!------------------- footer ------------------->
 		<footer style="text-align: center; color: white;">
-			<p style="display:inline;">Contact Us:    </p>
-			<a class="text-uppercase" style="margin-left: 30px">Mor Levi </a>
-			<a href="https://www.facebook.com/mor.levi.3766/">
-				<img id="facebook-logo" src="images/linkedin.png" style="margin-left: 3px" width="30px" height="30px">
+			<p style="display:inline;">Contact Us:</p>
+			<a class="text-uppercase" style="margin-left: 30px;">Mor Levi</a>
+			<!-- <a href="https://www.facebook.com/mor.levi.3766/"> -->
+			<a href="mailto:Morlevi0666@gmail.com" style="text-decoration:none">
+				<img id="gmail-logo" src="images/Gmail.png" width="30px" height="30px">
 			</a>
 			<a class="text-uppercase" style="margin-left: 30px">Meital Glick </a>
-			<a href="https://www.linkedin.com/">
-				<img id="linkedin-logo" src="images/linkedin.png" width="40px" height="40px">
+			<a href="mailto:meitalgl@post.bgu.ac.il">
+				<img id="gmail-logo" src="images/Gmail.png" width="30px" height="30px">
 			</a>
 		</footer>
 	</body>

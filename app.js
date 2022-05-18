@@ -17,6 +17,18 @@ var right_key
 var left_key
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
 
+//Real value for variables after pick or random
+let right_key_pick;
+let left_key_pick;
+let up_key_pick;
+let down_key_pick;
+let balls_num_pick;
+let time_num_pick;
+let monsters_num_pick;
+let ball5_color_pick;
+let ball15_color_pick;
+let ball25_color_pick; 
+
 
 // 4- obstacle, 2- ball , 1- food , 3-
 $(document).ready(function() {
@@ -228,6 +240,7 @@ function show_about_page() {
 
 //===================================== Start Game ===============================
 function Start() {
+	DisplaySettings();
 	board = new Array();
 	score = 0;
 	lives = 3;
@@ -482,4 +495,32 @@ function UpdatePosition() {
 	} else {
 		Draw();
 	}
+}
+
+function DisplaySettings(){
+	right_key_pick = document.getElementById('right_key').value;
+	left_key_pick = document.getElementById('left_key').value;
+	up_key_pick = document.getElementById('up_key').value;
+	down_key_pick = document.getElementById('down_key').value;
+
+	balls_num_pick = document.getElementById('balls_num').value;
+	time_num_pick = document.getElementById('time_num').value;
+	monsters_num_pick = document.getElementById('monsters_num').value;
+
+	ball5_color_pick = document.getElementById('ball5_color').value;
+	ball15_color_pick = document.getElementById('ball15_color').value;
+	ball25_color_pick = document.getElementById('ball25_color').value;
+
+	$("#keyRightDisplay").text(right_key_pick);
+	$("#keyLeftDisplay").text(left_key_pick);
+	$("#keyUpDisplay").text(up_key_pick);
+	$("#keyDownDisplay").text(down_key_pick);
+
+	$("#ballsNum").text(balls_num_pick);
+	$("#gametime").text(time_num_pick);
+	$("#monstersNum").text(monsters_num_pick);
+
+	document.getElementById('color5').style.color = ball5_color_pick;
+	document.getElementById('color15').style.color = ball15_color_pick;
+	document.getElementById('color25').style.color = ball25_color_pick;
 }
