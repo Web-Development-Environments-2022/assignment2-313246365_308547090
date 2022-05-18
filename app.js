@@ -16,6 +16,7 @@ var down_key
 var right_key
 var left_key
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
+let winMusic = new Audio('./audio/Win.mp3');
 
 //Real value for variables after pick or random
 let right_key_pick;
