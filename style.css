@@ -329,15 +329,8 @@ footer {
   }
 
   #newGameButton{
-    background: url("images/bowl.jpg");
-    width:50px;
-    height:50px;
-    background-position: 100px 0px;
-  }
-
-  #newGameButton:hover{
-    background-position: bottom;
-    cursor: pointer;
+    width: 40%;
+    height: 40%;
   }
 
   
