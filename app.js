@@ -524,7 +524,7 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
-	interval_cake = setInterval(UpdateCakePosition, 400);
+	interval_cake = setInterval(UpdateCakePosition, 450);
 
 	monsters_intervals =new Array();
 	
@@ -533,7 +533,7 @@ function Start() {
 	
 	//for (let index = 1; index < monsters_number+1; index++) {
 		
-	monsters_intervals = setInterval(UpdateMonsterPosition, 400);
+	monsters_intervals = setInterval(UpdateMonsterPosition, 900);
 	console.log("interval monster number" );
 
 	//}
@@ -763,41 +763,46 @@ function Draw() {
 
 
 function UpdateCakePosition(){
+
+	
 	let i_now = moving_objects_array[0].i;
 	let j_now = moving_objects_array[0].j;
-	let move_right = [i_now,j_now+1];
-	let move_left = [i_now,j_now-1];
-	let move_up = [1+i_now,j_now];
-	let move_down = [i_now-1,j_now];
-	
-	let random_dir = Math.floor(Math.random() * 4 + 1);
-	let direction;
-	let stop= false;
-	while(stop===false){
-		switch (random_dir) {
-			case 1:
-				direction = move_right;
-			break;
-			case 2:
-				direction =move_left;
-			break;
-			case 3:
-				direction = move_up;
-			break;
-			case 4:
-				direction =	move_down;
-
-		}
-		if(board[direction[0]][direction[1]] !==4 ){
-			stop=true;
-		}
-
+	if(i_now !==-1 && j_now !==-1){
+		let move_right = [i_now,j_now+1];
+		let move_left = [i_now,j_now-1];
+		let move_up = [1+i_now,j_now];
+		let move_down = [i_now-1,j_now];
 		
-	}
-	moving_objects_array[0].i= direction[0];
-	moving_objects_array[0].j= direction[1];
+		let random_dir = Math.floor(Math.random() * 4 + 1);
+		let direction;
+		let stop= false;
+		while(stop===false){
+			switch (random_dir) {
+				case 1:
+					direction = move_right;
+				break;
+				case 2:
+					direction =move_left;
+				break;
+				case 3:
+					direction = move_up;
+				break;
+				case 4:
+					direction =	move_down;
 
-	return direction;
+			}
+			if(board[direction[0]][direction[1]] !==4 ){
+				stop=true;
+			}
+
+			
+		}
+		moving_objects_array[0].i= direction[0];
+		moving_objects_array[0].j= direction[1];
+
+		return direction;
+	}
+	return
 }
 
 
@@ -965,6 +970,7 @@ function UpdatePosition() {
 
 		// collision with monster - TODO
 		console.log("before checking colission with monsters ")
+		
 		for (var k = 0; k< moving_objects_array.length; k++) {
 
 		console.log("monster limit in loop"+ (monsters_number+1));
@@ -974,6 +980,12 @@ function UpdatePosition() {
 		console.log("curr points "+ curr_points);
 
 			if( shape.i=== curr_object.i && shape.j=== curr_object.j){
+
+				if(k===0){
+					curr_object.i=-1;
+					curr_object.j=-1;
+					
+				}
 				
 				//curr_object.isActive = true;
 				score  = score + curr_points ;
@@ -1007,19 +1019,22 @@ function UpdatePosition() {
 					}
 				}
 				
-				for(let index= 0; index<moving_objects_array.length;index++){
+				//hit by monsters only - update packman and minsters place
+				if(k!==0){
+					for(let index= 1; index<moving_objects_array.length;index++){
 
-					//disappeare moving item
-					moving_objects_array[index].i= moving_objects_array[index].i_origin;
-					moving_objects_array[index].j= moving_objects_array[index].j_origin;
-				}
-				
-				//packman new place
-				var random1 = findRandomEmptyCell(board);
-				board[shape.i][shape.j] =0;
-				shape.i =random1[0];
-				shape.j =random1[1];
+						//disappeare moving item
+						moving_objects_array[index].i= moving_objects_array[index].i_origin;
+						moving_objects_array[index].j= moving_objects_array[index].j_origin;
+					}
+					
+					//packman new place
+					var random1 = findRandomEmptyCell(board);
+					board[shape.i][shape.j] =0;
+					shape.i =random1[0];
+					shape.j =random1[1];
 				break;
+				}
 
 			}
 		}
