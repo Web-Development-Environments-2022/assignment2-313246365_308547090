@@ -26,6 +26,7 @@ var height;
 var width;
 var clock_remain = true;
 var clock_obj;
+var clock_flag = false;
 
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
 let winMusic = new Audio('./audio/Win.mp3');
@@ -85,7 +86,7 @@ function CheckUser(){ //login
 
 	if (flag === 1){
 		//if valid -  start game - setting page
-		alert( "validation succeeded" );
+		// alert( "validation succeeded" );
 		//location.href="run.html";
 		show_settings_page();
 		ChangeWelcomeUser(username1);
@@ -178,8 +179,7 @@ function Check_Settings(){
 
 
 function show_welcome_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "flex";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -190,8 +190,7 @@ function show_welcome_page() {
 }
 
 function show_login_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "flex";
@@ -201,8 +200,7 @@ function show_login_page() {
 }
 
 function show_register_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "flex";
 	document.getElementById('login_page').style.display = "none";
@@ -212,8 +210,7 @@ function show_register_page() {
 }
 function show_settings_page() {
 	if (Object.keys(curr_user).length !== 0){
-		gameMusic.pause();
-		gameMusic.currentTime = 0;
+		Stop();
 		document.getElementById('welcome_page').style.display = "none";
 		document.getElementById('register_page').style.display = "none";
 		document.getElementById('login_page').style.display = "none";
@@ -225,8 +222,7 @@ function show_settings_page() {
 }
 
 function show_game_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -236,8 +232,7 @@ function show_game_page() {
 }
 
 function show_about_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -409,7 +404,7 @@ function Start() {
 
 	//TODO: MONSTERS ON BOARD 
 
-	//placing packman
+	//placing pacman
 	var emptyCell = findRandomEmptyCell(board);
 	console.log("after find random")
 	board[emptyCell[0]][emptyCell[1]] = 2;
@@ -447,6 +442,8 @@ function Start() {
 }
 
 function Stop(){ //Stop game 
+	window.clearInterval(interval);
+	clock_flag = false;
 	gameMusic.pause();
 	gameMusic.currentTime = 0;
 }
@@ -678,24 +675,34 @@ function UpdatePosition() {
 		board[shape.i][shape.j] =0;
 		score = score+25;
 	}
-
 	board[shape.i][shape.j] = 2;
+
+	//time is over
 	var currentTime = new Date();
-	time_elapsed = (currentTime - start_time) / 1000;
+	time_elapsed = Math.round(time_num_pick-(currentTime - start_time) / 1000);
+	if (clock_flag === true){
+		time_elapsed += 60;
+	}
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score == 50) {
-		window.clearInterval(interval);
-		window.alert("Game completed");
-
-	//clock colission -=MOR=
+	if (time_elapsed <= 0 && score < 100){
+		Stop();
+		alert("You are better than " + score + " points!")
 	}
-	if (shape.i===clock_obj.i &&shape.j===clock_obj.j) {
-		//time_elapsed += clock.time_addition(4000);
+	if (time_elapsed <= 0 && score >= 100) {
+		Stop();
+		alert("Winner!!!")
+
+	}
+	//clock colission -=MOR=
+	if (shape.i===clock_obj.i && shape.j===clock_obj.j) {
+		time_elapsed += 60;
+		lblTime.value = time_elapsed;
 		board[clock_obj.i][clock_obj.j] = 0;
 		clock_obj.i= -1;
 		clock_obj.j= -1;
+		clock_flag = true;
 
 	//collision with cake
 
