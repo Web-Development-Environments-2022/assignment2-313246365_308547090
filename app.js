@@ -439,7 +439,7 @@ function Start() {
 				(i == 3 && j == 3) ||
 				(i == 3 && j == 4) ||
 				(i == 3 && j == 5) ||
-				(i == 6 && j == 1) ||
+				(i == 6 && j == 1) ||				
 				(i == 6 && j == 2) ) {
 				board[i][j] = 4;
 			} 
@@ -550,6 +550,8 @@ function Start() {
 
 function Stop(){ //Stop game 
 	window.clearInterval(interval);
+	window.clearInterval(interval_cake);
+	window.clearInterval(monsters_intervals);
 	clock_flag = false;
 	gameMusic.pause();
 	gameMusic.currentTime = 0;
