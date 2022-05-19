@@ -98,7 +98,7 @@ function CheckUser(){ //login
 	}
 	else{
 		alert( "validation failed" );
-		show_login_page();
+		//show_login_page();
 	}
 	
 	flag = 0
