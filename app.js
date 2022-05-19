@@ -4,6 +4,7 @@ var board;
 var score;
 var lives;
 var pac_color;
+var pac_side = 1; // side of pacman's face
 var start_time;
 var time_elapsed;
 var interval;
@@ -149,7 +150,7 @@ function Check_Settings(){
 		return 
 	}
 
-	if (time_num1<60)
+	if (time_num1<60 || time_num1 > 300)
 	{
 		alert( "validation failed: game time is too short" );
 		return 
@@ -485,7 +486,7 @@ function SetKeyCode(event1,key_type){
 }
 
 function GetKeyPressed() {
-	if (keysDown[up_key]) {
+	if (keysDown[right_key]) {
 		return 1;
 	}
 	if (keysDown[down_key]) {
@@ -494,7 +495,7 @@ function GetKeyPressed() {
 	if (keysDown[left_key]) {
 		return 3;
 	}
-	if (keysDown[right_key]) {
+	if (keysDown[up_key]) {
 		return 4;
 	}
 }
@@ -525,7 +526,7 @@ function Random(){
 	document.getElementById('balls_num').value  = Math.floor(min + Math.random()*(max-min));
 	//random time
 	min=60
-	max = 3000
+	max = 300
 	document.getElementById('time_num').value  = Math.floor(min + Math.random()*(max-min));
 
 	//random monsters
@@ -569,16 +570,24 @@ function Draw() {
 			//packman?
 			if (board[i][j] == 2) {
 				context.beginPath();
-				context.arc(center.x, center.y, width/2, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+				context.arc(center.x, center.y, width/2, (0.1+0.5*(pac_side-1)) * Math.PI, (1.8 + 0.5 * (pac_side-1)) * Math.PI); // half circle
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
 
 				//eye
-				context.arc(center.x + (width/12), center.y - (width/4),(width/12), 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
-				context.fill();
+				if (pac_side !== 4){
+					context.arc(center.x + (width/12), center.y - (width/4),(width/12), 0, 2 * Math.PI); // circle
+					context.fillStyle = "black"; //color
+					context.fill();
+				}
+				else{
+					context.arc(center.x + (width/4), center.y - (width/12),(width/12), 0, 2 * Math.PI); // circle
+					context.fillStyle = "black"; //color
+					context.fill();
+				}
+				
 
 				//balls
 			} else if (board[i][j] == 5) {
@@ -628,26 +637,29 @@ function Draw() {
 }
 
 function UpdatePosition() {
-	board[shape.i][shape.j] = 0;
-	var x = GetKeyPressed();
-	if (x == 1) {
-		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
-			shape.j--;
+	board[shape.i][shape.j] = 0; // shape = pacman
+	let x = GetKeyPressed();
+	if (x !== undefined) //define pacman's side by input key
+		pac_side = x;
+	
+	if (x == 1) { // right
+		if (shape.i < rows-1 && board[shape.i + 1][shape.j] != 4) {
+			shape.i++;
 		}
 	}
-	if (x == 2) {
+	if (x == 2) { // down
 		if (shape.j < rows-1 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 		}
 	}
-	if (x == 3) {
+	if (x == 3) { // left
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 		}
 	}
-	if (x == 4) {
-		if (shape.i < rows-1 && board[shape.i + 1][shape.j] != 4) {
-			shape.i++;
+	if (x == 4) { // up
+		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
+			shape.j--;
 		}
 	}
 	// if (board[shape.i][shape.j] == 1) {
