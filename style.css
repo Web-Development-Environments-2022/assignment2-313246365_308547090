@@ -211,6 +211,9 @@ header {
     /* margin-top: -100px; */
     /* padding: 30px; */
     display: flex;
+    /* position: sticky; (recomended) */
+    top: 0px;
+    /* position: fixed;  */
     justify-content: space-around;
     text-align: center;
     background: #5a40ce;
@@ -296,6 +299,10 @@ footer {
 /* 
   ===== GAME STYLE ==== */
 
+  /* #canvas{
+    width: 800px;
+    height: 800px;
+  } */
 
   .game_field{
     width: 100px;
@@ -313,43 +320,55 @@ footer {
 
   .game_data{
     position: relative;
-    left: 10px;
-    width: 180px;
+    /* left: 10px; */
+    width: 120px;
   }
 
   .displaysettings{
     font-size: 20px;
-    font-family: "Sofia", sans-serif;
+    /* font-family: "Sofia", sans-serif; */
     color: black;
+    background-color: white;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
   }
 
   .PointsDisplay{
     font-size: 20px;
     font-family: "Sofia", sans-serif;
+    background-color: white;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
   }
 
   #newGameButton{
-    width: 40%;
-    height: 40%;
+    width: 25vh;
+    height: 10vh;
+    cursor: pointer;
+  }
+
+  #newGameButton:hover {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+
+  #LabelsButtonDiv{
+    width: 45vh;
+    height: 32vh;
+    align-items: center;
+    position: relative;
+    left: 20%;
+    margin-bottom: 80%;
   }
 
   #gamesettings{
-    background: white;
-    /* max-width: 432px; */
-    width: 300px;
-    height: 320px;
-    font-size:18px; 
-    color:rgb(234, 39, 169);
-    
-    /* justify-content: space-between; */
-    border-radius: 5px;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
-    /* margin: 50px 20px 20px 450px;
-    margin-left: 40%;
-    margin-top: 10%; */
-    /* padding-left: 40px; */
+    width: 45vh;
+    height: 32vh;
     align-items: center;
-    size: 300px;
+    position: relative;
+    right: 10%;
+    margin-bottom: 80%;
 
   }
 

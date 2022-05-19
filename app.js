@@ -4,6 +4,7 @@ var board;
 var score;
 var lives;
 var pac_color;
+var pac_side = 1; // side of pacman's face
 var start_time;
 var time_elapsed;
 var interval;
@@ -31,6 +32,7 @@ var monter_interval2;
 var monster_interval3;
 var monster_interval4;
 var monsters_intervals;
+var clock_flag = false;
 
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
 let winMusic = new Audio('./audio/Win.mp3');
@@ -62,17 +64,23 @@ $(document).ready(function() {
 	//Start();
 });
 
+$(function(){
+    var dtToday = new Date();
+	var minDate = dtToday.toISOString().substring(0,10);
+	$('#birthdate_r').prop('max', minDate);
+});
+
 
 //========================== INITIALIZATION  ===========================
 
 //monsters_number = document.getElementById("monsters_num").value
 
-//time_elapsed = document.getElementById("time_num).value
+//time_elapsed = document.getElementById("time_num").value
 //========================== functions to header  ===========================
 function CheckUser(){ //login
 	let username1= document.getElementById("username").value
 	let password1 = document.getElementById("password").value
-	curr_user = {username: username1,password:password1}
+	curr_user = {username: username1, password: password1}
 	let flag = 0 
 	for (var i = 0; i < users_list.length; i++) {
         
@@ -82,9 +90,8 @@ function CheckUser(){ //login
         
     }
 
-	if (flag===1){
+	if (flag === 1){
 		//if valid -  start game - setting page
-		alert( "validation succeeded" );
 		//location.href="run.html";
 		show_settings_page();
 		ChangeWelcomeUser(username1);
@@ -94,7 +101,7 @@ function CheckUser(){ //login
 		show_login_page();
 	}
 	
-	flag =0
+	flag = 0
 
 }
 
@@ -116,7 +123,7 @@ function RegisterUser(){
 	//if password is not containing letters and numbers
 	if (!(password1.match(/([a-zA-Z])/))|| (!password1.match(/([0-9])/)))
 	{
-		alert( "validation failed: password must contain  English letters and numbers only" );
+		alert( "validation failed: password must contain English letters and numbers only" );
 		return 
 	}
 
@@ -143,15 +150,13 @@ function Check_Settings(){
 	let balls_num1 = $('#balls_num').val()
 	let time_num1 = $('#time_num').val()
 
-	//if password is not containing letters and numbers
 	if (balls_num1 <50|| balls_num1>90)
 	{
 		alert( "validation failed: balls number is out of range" );
 		return 
 	}
 
-	//if full name contain numbers
-	if (time_num1<60)
+	if (time_num1<60 || time_num1 > 300)
 	{
 		alert( "validation failed: game time is too short" );
 		return 
@@ -179,8 +184,7 @@ function Check_Settings(){
 
 
 function show_welcome_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "flex";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -191,8 +195,7 @@ function show_welcome_page() {
 }
 
 function show_login_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "flex";
@@ -202,8 +205,7 @@ function show_login_page() {
 }
 
 function show_register_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "flex";
 	document.getElementById('login_page').style.display = "none";
@@ -213,8 +215,7 @@ function show_register_page() {
 }
 function show_settings_page() {
 	if (Object.keys(curr_user).length !== 0){
-		gameMusic.pause();
-		gameMusic.currentTime = 0;
+		Stop();
 		document.getElementById('welcome_page').style.display = "none";
 		document.getElementById('register_page').style.display = "none";
 		document.getElementById('login_page').style.display = "none";
@@ -226,8 +227,7 @@ function show_settings_page() {
 }
 
 function show_game_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -237,8 +237,7 @@ function show_game_page() {
 }
 
 function show_about_page() {
-	gameMusic.pause();
-	gameMusic.currentTime = 0;
+	Stop();
 	document.getElementById('welcome_page').style.display = "none";
 	document.getElementById('register_page').style.display = "none";
 	document.getElementById('login_page').style.display = "none";
@@ -491,7 +490,7 @@ function Start() {
 
 	//TODO: MONSTERS ON BOARD 
 
-	//placing packman
+	//placing pacman
 	var emptyCell = findRandomEmptyCell(board);
 	console.log("after find random")
 	board[emptyCell[0]][emptyCell[1]] = 2;
@@ -550,6 +549,8 @@ function Start() {
 }
 
 function Stop(){ //Stop game 
+	window.clearInterval(interval);
+	clock_flag = false;
 	gameMusic.pause();
 	gameMusic.currentTime = 0;
 }
@@ -589,7 +590,7 @@ function SetKeyCode(event1,key_type){
 }
 
 function GetKeyPressed() {
-	if (keysDown[up_key]) {
+	if (keysDown[right_key]) {
 		return 1;
 	}
 	if (keysDown[down_key]) {
@@ -598,7 +599,7 @@ function GetKeyPressed() {
 	if (keysDown[left_key]) {
 		return 3;
 	}
-	if (keysDown[right_key]) {
+	if (keysDown[up_key]) {
 		return 4;
 	}
 }
@@ -619,7 +620,7 @@ function Random(){
 	
 
 	up_key = 38;
-	document.getElementById('up_key').value  = "Arrow UP";
+	document.getElementById('up_key').value  = "Arrow Up";
 	
 
 	down_key = 40;
@@ -629,7 +630,7 @@ function Random(){
 	document.getElementById('balls_num').value  = Math.floor(min + Math.random()*(max-min));
 	//random time
 	min=60
-	max = 3000
+	max = 300
 	document.getElementById('time_num').value  = Math.floor(min + Math.random()*(max-min));
 
 	//random monsters
@@ -658,6 +659,8 @@ function getRandomColor() {
 //drawing the canvas, the player and the obstacle
 function Draw() {
 	canvas.width = canvas.width; //clean board
+	// canvas.width = window.innerWidth
+	// canvas.height = window.innerHeight
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblLives.value = lives;
@@ -673,16 +676,24 @@ function Draw() {
 			//packman?
 			if (board[i][j] == 2) {
 				context.beginPath();
-				context.arc(center.x, center.y, width/2, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+				context.arc(center.x, center.y, width/2, (0.1+0.5*(pac_side-1)) * Math.PI, (1.8 + 0.5 * (pac_side-1)) * Math.PI); // half circle
 				context.lineTo(center.x, center.y);
 				context.fillStyle = pac_color; //color
 				context.fill();
 				context.beginPath();
 
 				//eye
-				context.arc(center.x + (width/12), center.y - (width/4),(width/12), 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
-				context.fill();
+				if (pac_side !== 4){
+					context.arc(center.x + (width/12), center.y - (width/4),(width/12), 0, 2 * Math.PI); // circle
+					context.fillStyle = "black"; //color
+					context.fill();
+				}
+				else{
+					context.arc(center.x + (width/4), center.y - (width/12),(width/12), 0, 2 * Math.PI); // circle
+					context.fillStyle = "black"; //color
+					context.fill();
+				}
+				
 
 				//balls
 			} else if (board[i][j] == 5) {
@@ -879,26 +890,29 @@ function UpdateMonsterPosition(){
 
 
 function UpdatePosition() {
-	board[shape.i][shape.j] = 0;
-	var x = GetKeyPressed();
-	if (x == 1) {
-		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
-			shape.j--;
+	board[shape.i][shape.j] = 0; // shape = pacman
+	let x = GetKeyPressed();
+	if (x !== undefined) //define pacman's side by input key
+		pac_side = x;
+	
+	if (x == 1) { // right
+		if (shape.i < rows-1 && board[shape.i + 1][shape.j] != 4) {
+			shape.i++;
 		}
 	}
-	if (x == 2) {
+	if (x == 2) { // down
 		if (shape.j < rows-1 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 		}
 	}
-	if (x == 3) {
+	if (x == 3) { // left
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 		}
 	}
-	if (x == 4) {
-		if (shape.i < rows-1 && board[shape.i + 1][shape.j] != 4) {
-			shape.i++;
+	if (x == 4) { // up
+		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
+			shape.j--;
 		}
 	}
 	//collision with ball
@@ -914,20 +928,34 @@ function UpdatePosition() {
 		board[shape.i][shape.j] =0;
 		score = score+25;
 	}
-
 	board[shape.i][shape.j] = 2;
+
+	//time is over
 	var currentTime = new Date();
-	time_elapsed = (currentTime - start_time) / 1000;
+	time_elapsed = Math.round(time_num_pick-(currentTime - start_time) / 1000);
+	if (clock_flag === true){
+		time_elapsed += 60;
+	}
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
+	if (time_elapsed <= 0 && score < 100){
+		Stop();
+		alert("You are better than " + score + " points!")
+	}
+	if (time_elapsed <= 0 && score >= 100) {
+		Stop();
+		alert("Winner!!!")
 
-	if (shape.i===clock_obj.i &&shape.j===clock_obj.j) {
-		//time_elapsed += clock.time_addition(4000);
+	}
+	//clock colission -=MOR=
+	if (shape.i===clock_obj.i && shape.j===clock_obj.j) {
+		time_elapsed += 60;
+		lblTime.value = time_elapsed;
 		board[clock_obj.i][clock_obj.j] = 0;
 		clock_obj.i= -1;
 		clock_obj.j= -1;
-	
+		clock_flag = true;
 
 	//collision with cake
 
@@ -1006,7 +1034,6 @@ function DisplaySettings(){
 	left_key_pick = document.getElementById('left_key').value;
 	up_key_pick = document.getElementById('up_key').value;
 	down_key_pick = document.getElementById('down_key').value;
-	console.log(right_key_pick);
 	balls_num_pick = document.getElementById('balls_num').value;
 	time_num_pick = document.getElementById('time_num').value;
 	monsters_num_pick = document.getElementById('monsters_num').value;
@@ -1016,7 +1043,6 @@ function DisplaySettings(){
 	ball25_color_pick = document.getElementById('ball25_color').value;
 
 	$("#KeyRightDisplay").text(right_key_pick);
-	// document.getElementById('keyRightDisplay').value = right_key_pick;
 	$("#KeyLeftDisplay").text(left_key_pick);
 	$("#KeyUpDisplay").text(up_key_pick);
 	$("#KeyDownDisplay").text(down_key_pick);
