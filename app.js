@@ -33,6 +33,7 @@ var monster_interval3;
 var monster_interval4;
 var monsters_intervals;
 var clock_flag = false;
+var food;
 
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
 let winMusic = new Audio('./audio/Win.mp3');
@@ -87,7 +88,6 @@ function CheckUser(){ //login
             if ( users_list[i].username===username1 && users_list[i].password===password1){
 				flag = 1
 			}
-        
     }
 
 	if (flag === 1){
@@ -255,9 +255,6 @@ function show_about_page() {
 // [3] monster -10 points-> (19,10)
 // [4] monster -20 points-> (10,1)
 
-
-
-
 function create_moving_objects_array(monsters_number){
 	moving_objects_array = new Array();
  	
@@ -312,11 +309,6 @@ function create_moving_objects_array(monsters_number){
 		if (i === max_index){
 			moving_objects_array[i].isActive =false;
 		}
-
-
-		
-		
-		
  	}
 
 	 moving_objects_array[1].i= 1;
@@ -350,20 +342,7 @@ function create_moving_objects_array(monsters_number){
 	}
 
 	console.log("final numbers in moving list"+moving_objects_array.length);
-	 //update place for monsters:
-	 // [0] cake +50 points -> (10,15)
-	// [1] monster -10 points-> (1,10)
-	// [2] monster -20 points-> (10,19)
-	// [3] monster -10 points-> (19,10)
-	// [4] monster -20 points-> (10,1)
-	 
-
-
-
-
 }
-
-
 // number 1 = food 
 function placeBalls(board){
 	let x = Math.floor(0.6*balls_number);
@@ -397,21 +376,9 @@ function placeBalls(board){
 		board[emptyCell[0]][emptyCell[1]] = 25;
 
 	}
-	
 	console.log("finish place balls")
 	return;
-
 }
-
-// //moving
-// function createCake{
-
-// }
-
-
-
-
-
 //===================================== Start Game ===============================
 function Start() {
 	DisplaySettings();
@@ -422,6 +389,7 @@ function Start() {
 	pac_color = "yellow";
 	var cnt = 100; //??
 	var food_remain = balls_number;
+	food = balls_num_pick;
 	var pacman_remain = 1;
 	start_time = new Date();
 	monsters_number = $('#monsters_num').val();
@@ -434,7 +402,7 @@ function Start() {
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < cols; j++) {
 
-			// put walls- MOR
+			// put walls
 			if ((i == 1 && j == 1) ||
 				(i == 3 && j == 3) ||
 				(i == 3 && j == 4) ||
@@ -445,29 +413,17 @@ function Start() {
 			} 
 
 			
-			// put walls- MOR
+			// put walls
 			if ((i == 0) || (j===0) || (i===rows-1)||j===cols-1 ) {
 				board[i][j] = 4;
 			} 
-		
-
 			else {
-
 				//putting balls on board 
-				
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					food_remain--;
 					board[i][j] = 1;
 				}
-				//   if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
-				// 	shape.i = i;
-				// 	shape.j = j;
-				// 	pacman_remain--;
-				// 	board[i][j] = 2;
-				//}
-			
-
 				else {
 					board[i][j] = 0;
 				}
@@ -475,20 +431,7 @@ function Start() {
 			}
 		}
 	}
-
-	//food addition
-	// while (food_remain > 0) {
-	// 	var emptyCell = findRandomEmptyCell(board);
-	// 	board[emptyCell[0]][emptyCell[1]] = 1;
-	// 	food_remain--;
-	// }
-	
-	//console.log("before place balls in start")
 	placeBalls(board);
-	//console.log("after place balls in start")
-	console.log(board)
-
-	//TODO: MONSTERS ON BOARD 
 
 	//placing pacman
 	var emptyCell = findRandomEmptyCell(board);
@@ -513,6 +456,17 @@ function Start() {
 		"keydown",
 		function(e) {
 			keysDown[e.keyCode] = true;
+			switch(e.keyCode) {
+				case 37:
+				case 39:
+				case 38:
+				case 40:
+				case 32:
+					e.preventDefault(); // prevent page scrolling
+					break;
+				default:
+					break;
+			}
 		},
 		false
 	);
@@ -535,17 +489,7 @@ function Start() {
 		
 	monsters_intervals = setInterval(UpdateMonsterPosition, 900);
 	console.log("interval monster number" );
-
-	//}
-
-	// console.log("interval monster 1" );
-	// monster_interval1 =setInterval(UpdateMonster1Position, 400);
-	// console.log("after interval monster 1" );
-	//monster_interval2 =setInterval(UpdateMonsterPosition(2), 400);
-	//monster_interval3 = setInterval(UpdateMonsterPosition(3), 400);
-	//monster_interval4 = setInterval(UpdateMonsterPosition(4), 400);
-	
-	// gameMusic.play();
+	gameMusic.play();
 }
 
 function Stop(){ //Stop game 
@@ -811,7 +755,8 @@ function UpdateCakePosition(){
 function UpdateMonsterPosition(){
 
 	for (let index = 1; index < monsters_number +1 ; index++){	
-
+		// let curr_obj = moving_objects_array[index];
+		// if(curr_obj.i !== -1 && curr_obj.j == -1){
 		if(moving_objects_array[index].isActive ===true){
 			console.log ("START - UpdateMonsterPosition");
 			let packman_i= shape.i;
@@ -829,14 +774,6 @@ function UpdateMonsterPosition(){
 			direction[0].index_i = i_now;
 			direction[0].index_j = j_now+1;
 			direction[0].dist = Math.abs(packman_i-direction[0].index_i) + Math.abs(packman_j-direction[0].index_j);
-
-			console.log("monster1 ")
-			console.log("i_now is: ")
-			console.log(direction[0].index_i);
-			console.log("j_now is: ")
-			console.log(direction[0].index_j);
-			console.log("dist: ")
-			console.log(direction[0].dist);
 
 			//move left
 			direction[1] = new Object();
@@ -926,16 +863,25 @@ function UpdatePosition() {
 	if (board[shape.i][shape.j] == 5) {
 		board[shape.i][shape.j] =0;
 		score = score+5;
+		food--;
 	}
 	if (board[shape.i][shape.j] == 15) {
 		board[shape.i][shape.j] =0;
 		score = score+15;
+		food--;
 	}
 	if (board[shape.i][shape.j] == 25) {
 		board[shape.i][shape.j] =0;
 		score = score+25;
+		food--;
 	}
 	board[shape.i][shape.j] = 2;
+
+	if (food <= 0){
+		Stop();
+		winMusic.play();
+		setTimeout(function() {alert("Winner!!!")}, 500)
+	}
 
 	//time is over
 	var currentTime = new Date();
@@ -943,7 +889,7 @@ function UpdatePosition() {
 	if (clock_flag === true){
 		time_elapsed += 60;
 	}
-	if (score >= 20 && time_elapsed <= 10) {
+	if (score <= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
 	if (time_elapsed <= 0 && score < 100){
@@ -951,11 +897,12 @@ function UpdatePosition() {
 		alert("You are better than " + score + " points!")
 	}
 	if (time_elapsed <= 0 && score >= 100) {
+		winMusic.play();
 		Stop();
 		alert("Winner!!!")
 
 	}
-	//clock colission -=MOR=
+	//clock colission
 	if (shape.i===clock_obj.i && shape.j===clock_obj.j) {
 		time_elapsed += 60;
 		lblTime.value = time_elapsed;
@@ -963,54 +910,34 @@ function UpdatePosition() {
 		clock_obj.i= -1;
 		clock_obj.j= -1;
 		clock_flag = true;
-
-	//collision with cake
-
-	
-	//console.log("after checking colission with monsters ")
-	} else {
-
-		// collision with monster - TODO
+	} 
+	else {
+		// collision with monster
 		console.log("before checking colission with monsters ")
 		
 		for (var k = 0; k< moving_objects_array.length; k++) {
-
-		console.log("monster limit in loop"+ (monsters_number+1));
-		const curr_object =moving_objects_array[k];
-		const curr_points = curr_object.points;
-		const curr_is_active = curr_object.points;
-		console.log("curr points "+ curr_points);
+			const curr_object =moving_objects_array[k];
+			const curr_points = curr_object.points;
+			const curr_is_active = curr_object.points;
 
 			if( shape.i=== curr_object.i && shape.j=== curr_object.j){
-
 				if(k===0){
 					curr_object.i=-1;
 					curr_object.j=-1;
-					
 				}
-				
-				//curr_object.isActive = true;
 				score  = score + curr_points ;
-				//console.log("score");
-				//console.log(score);
 
 				if (score<0){
 					score=0;
 				}
-
-
-
 				if (curr_object.kind ==="monster20"){
-					
 					lives= lives-2;
 					console.log("score");
 					console.log(score);
-
 					if(lives===0||lives<0){
 						Stop();
 						alert("===== LOSER!!! =====");
 					}
-
 				}
 				
 				if(curr_object.kind ==="monster10"){
@@ -1030,7 +957,7 @@ function UpdatePosition() {
 						moving_objects_array[index].j= moving_objects_array[index].j_origin;
 					}
 					
-					//packman new place
+					//pacman new place
 					var random1 = findRandomEmptyCell(board);
 					board[shape.i][shape.j] =0;
 					shape.i =random1[0];
@@ -1040,7 +967,6 @@ function UpdatePosition() {
 
 			}
 		}
-
 			Draw();
 		}
 	}
