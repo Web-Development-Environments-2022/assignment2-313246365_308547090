@@ -25,6 +25,12 @@ var height;
 var width;
 var clock_remain = true;
 var clock_obj;
+var interval_cake;
+var monter_interval1;
+var monter_interval2;
+var monster_interval3;
+var monster_interval4;
+var monsters_intervals;
 
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
 let winMusic = new Audio('./audio/Win.mp3');
@@ -244,11 +250,11 @@ function show_about_page() {
 // ===================================== Objects creation ===========================
 
 //two kinds of monsters with diffrent score type
-// [0] cake +50 points
-// [1] monster -10 points
-// [2] monster -20 points
-// [3] monster -10 points
-// [4] monster -20 points
+// [0] cake +50 points -> (10,15)
+// [1] monster -10 points-> (1,10)
+// [2] monster -20 points-> (10,19)
+// [3] monster -10 points-> (19,10)
+// [4] monster -20 points-> (10,1)
 
 
 
@@ -262,27 +268,100 @@ function create_moving_objects_array(monsters_number){
 	 moving_objects_array[0].kind = "cake";
 	 moving_objects_array[0].image = new Image();
 	 moving_objects_array[0].i = 10;
-	 moving_objects_array[0].j= 15;
+	 moving_objects_array[0].j= 10;
+	 moving_objects_array[0].i_origin = 10;
+	 moving_objects_array[0].j_origin =10 ;
+	 moving_objects_array[0].image = new Image();
+	 //(moving_objects_array[0].image).src = "images/cake.png";
+	 (moving_objects_array[0].image).src = "images/Cupcake.png";
+	 moving_objects_array[0].isActive =true;
 	 console.log("finish create cake");
 
 
-	for (let i = 1; i< 1+monsters_number; i++) {
+	 let max_index = 1+monsters_number;
+	for (let i = 1; i< 5 ; i++) {
 
 		if(i===1 ||i===3){
 		moving_objects_array[i] = new Object();
 		moving_objects_array[i].points = -10;
 		moving_objects_array[i].kind = "monster10";
 		moving_objects_array[i].image = new Image();
+		(moving_objects_array[i].image).src = "images/10monster.png";
+		moving_objects_array[i].isActive =true;
+		console.log("finish create 10monster");
+		
 		}
 		if(i===2 ||i===4){
 			moving_objects_array[i] = new Object();
 			moving_objects_array[i].points = -20;
 			moving_objects_array[i].kind = "monster20";
 			moving_objects_array[i].image = new Image();
+			(moving_objects_array[i].image).src = "images/20monster.png";
+			moving_objects_array[i].isActive =true;
+			
+		}
+		console.log("finish create 20monster");
+
+		if(i<max_index){
+
+			moving_objects_array[i].isActive =true;
 		}
 
-		//update i,
+		if (i>max_index){
+			moving_objects_array[i].isActive =false;
+		}
+		if (i === max_index){
+			moving_objects_array[i].isActive =false;
+		}
+
+
+		
+		
+		
  	}
+
+	 moving_objects_array[1].i= 1;
+	 moving_objects_array[1].j= 1;
+	 moving_objects_array[1].i_origin = 1;
+	 moving_objects_array[1].j_origin =1 ;
+
+	 moving_objects_array[2].i= 1;
+	 moving_objects_array[2].j= 18;
+	 moving_objects_array[2].i_origin =1 ;
+	 moving_objects_array[2].j_origin =18 ;
+	 
+	 moving_objects_array[3].i= 18;
+	 moving_objects_array[3].j= 1;
+	 moving_objects_array[3].i_origin =18 ;
+	 moving_objects_array[3].j_origin =1 ;
+	 
+	 moving_objects_array[4].i=18 ;
+	 moving_objects_array[4].j= 18;
+	 moving_objects_array[4].i_origin =18 ;
+	 moving_objects_array[4].j_origin = 18;
+
+	
+	let limit = moving_objects_array.length -monsters_number-1 ;
+	console.log("limit is:" + limit);
+
+	for (let i = 0; i< limit ; i++) {
+		moving_objects_array.pop();
+		console.log("pop" +i);
+
+	}
+
+	console.log("final numbers in moving list"+moving_objects_array.length);
+	 //update place for monsters:
+	 // [0] cake +50 points -> (10,15)
+	// [1] monster -10 points-> (1,10)
+	// [2] monster -20 points-> (10,19)
+	// [3] monster -10 points-> (19,10)
+	// [4] monster -20 points-> (10,1)
+	 
+
+
+
+
 }
 
 
@@ -296,13 +375,13 @@ function placeBalls(board){
 	
 	// 60% balls of 5 points
 	for (let i = 0; i < x; i++) {
-		console.log("befor find random")
+		//console.log("befor find random")
 		var emptyCell = findRandomEmptyCell(board);
 		console.log("after find random")
 		board[emptyCell[0]][emptyCell[1]] = 5;
 
 	}
-	console.log("first loop ended")
+	//console.log("first loop ended")
 
 	// 30% balls of 15 points
 	for (let i = x+1 ; i < x+1+y; i++) {
@@ -339,15 +418,17 @@ function Start() {
 	DisplaySettings();
 	board = new Array();
 	score = 0;
-	lives = 3;
+	lives = 5;
 	gameMusic.loop = true;
 	pac_color = "yellow";
 	var cnt = 100; //??
 	var food_remain = balls_number;
 	var pacman_remain = 1;
 	start_time = new Date();
+	monsters_number = $('#monsters_num').val();
 
-
+	console.log("monsters number" +monsters_number);
+	create_moving_objects_array(monsters_number);
 	//init monsters&cake
 	for (var i = 0; i < rows; i++) {
 		board[i] = new Array();
@@ -360,11 +441,15 @@ function Start() {
 				(i == 3 && j == 4) ||
 				(i == 3 && j == 5) ||
 				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)
-			) {
+				(i == 6 && j == 2) ) {
 				board[i][j] = 4;
 			} 
+
 			
+			// put walls- MOR
+			if ((i == 0) || (j===0) || (i===rows-1)||j===cols-1 ) {
+				board[i][j] = 4;
+			} 
 		
 
 			else {
@@ -398,10 +483,10 @@ function Start() {
 	// 	board[emptyCell[0]][emptyCell[1]] = 1;
 	// 	food_remain--;
 	// }
-
-	console.log("before place balls in start")
+	
+	//console.log("before place balls in start")
 	placeBalls(board);
-	console.log("after place balls in start")
+	//console.log("after place balls in start")
 	console.log(board)
 
 	//TODO: MONSTERS ON BOARD 
@@ -440,6 +525,27 @@ function Start() {
 		false
 	);
 	interval = setInterval(UpdatePosition, 250);
+	interval_cake = setInterval(UpdateCakePosition, 400);
+
+	monsters_intervals =new Array();
+	
+	console.log("monsters_number");
+	console.log(monsters_number);
+	
+	//for (let index = 1; index < monsters_number+1; index++) {
+		
+	monsters_intervals = setInterval(UpdateMonsterPosition, 400);
+	console.log("interval monster number" );
+
+	//}
+
+	// console.log("interval monster 1" );
+	// monster_interval1 =setInterval(UpdateMonster1Position, 400);
+	// console.log("after interval monster 1" );
+	//monster_interval2 =setInterval(UpdateMonsterPosition(2), 400);
+	//monster_interval3 = setInterval(UpdateMonsterPosition(3), 400);
+	//monster_interval4 = setInterval(UpdateMonsterPosition(4), 400);
+	
 	// gameMusic.play();
 }
 
@@ -449,14 +555,14 @@ function Stop(){ //Stop game
 }
 
 function findRandomEmptyCell(board) {
-	console.log("before random")
+	//console.log("before random")
 	var i = Math.floor(Math.random() * (rows-1) + 1);
 	var j = Math.floor(Math.random() * (cols-1) + 1);
 	while (board[i][j] != 0) {
 		i = Math.floor(Math.random() * (rows-1) + 1);
 		j = Math.floor(Math.random() * (cols-1) + 1);
 	}
-	console.log("after random")
+	//console.log("after random")
 	return [i, j];
 }
 //=================== KEYS DEFINITION ==================
@@ -562,6 +668,8 @@ function Draw() {
 			center.x = i * width + width/2;
 			center.y = j * height + height/2;
 
+
+
 			//packman?
 			if (board[i][j] == 2) {
 				context.beginPath();
@@ -611,17 +719,164 @@ function Draw() {
 			//draw clock
 			else if (i === clock_obj.i && j===clock_obj.j) {
 				var img_clock=new Image();
-				img_clock.src="images/clock.png";
+				img_clock.src="images/time.png";
 				context.drawImage(img_clock,center.x - (width/2), center.y - (width/2), width, width);
 			}
-			//draw cake
-			//draw goests
+			//draw cake and goests
 			
+			// console.log("before cakes and monsters");
+			// console.log((moving_objects_array[0]).i);
 
+			//let moving_num= monsters_number +1;
+			//TODO - THE LENGTH 
+			for (let k = 0; k<moving_objects_array.length ; k++) {
+				const curr_object =moving_objects_array[k];
+
+				if( i=== curr_object.i && j=== curr_object.j ){
+
+					//if( curr_object.isActive === true){
+					context.drawImage(curr_object.image,center.x - (width/2), center.y - (width/2), width, width);
+					//}
+				}
+			}
+
+
+			
+			
 
 		}
 	}
+
+
 }
+
+
+function UpdateCakePosition(){
+	let i_now = moving_objects_array[0].i;
+	let j_now = moving_objects_array[0].j;
+	let move_right = [i_now,j_now+1];
+	let move_left = [i_now,j_now-1];
+	let move_up = [1+i_now,j_now];
+	let move_down = [i_now-1,j_now];
+	
+	let random_dir = Math.floor(Math.random() * 4 + 1);
+	let direction;
+	let stop= false;
+	while(stop===false){
+		switch (random_dir) {
+			case 1:
+				direction = move_right;
+			break;
+			case 2:
+				direction =move_left;
+			break;
+			case 3:
+				direction = move_up;
+			break;
+			case 4:
+				direction =	move_down;
+
+		}
+		if(board[direction[0]][direction[1]] !==4 ){
+			stop=true;
+		}
+
+		
+	}
+	moving_objects_array[0].i= direction[0];
+	moving_objects_array[0].j= direction[1];
+
+	return direction;
+}
+
+
+function UpdateMonsterPosition(){
+
+	for (let index = 1; index < monsters_number +1 ; index++){	
+
+		if(moving_objects_array[index].isActive ===true){
+			console.log ("START - UpdateMonsterPosition");
+			let packman_i= shape.i;
+			let packman_j= shape.j;
+			let i_now = moving_objects_array[index].i;
+			let j_now = moving_objects_array[index].j;
+			console.log("i_now is: ")
+			console.log(i_now);
+			console.log("j_now is: ")
+			console.log(j_now);
+
+			let direction= new Array();
+			//move right
+			direction[0] = new Object();
+			direction[0].index_i = i_now;
+			direction[0].index_j = j_now+1;
+			direction[0].dist = Math.abs(packman_i-direction[0].index_i) + Math.abs(packman_j-direction[0].index_j);
+
+			console.log("monster1 ")
+			console.log("i_now is: ")
+			console.log(direction[0].index_i);
+			console.log("j_now is: ")
+			console.log(direction[0].index_j);
+			console.log("dist: ")
+			console.log(direction[0].dist);
+
+			//move left
+			direction[1] = new Object();
+			direction[1].index_i =i_now;
+			direction[1].index_j = j_now-1;
+			direction[1].dist = Math.abs(packman_i-direction[1].index_i) + Math.abs(packman_j-direction[1].index_j);
+
+			//move up
+			direction[2] = new Object();
+			direction[2].index_i =1+i_now;
+			direction[2].index_j = j_now;
+			direction[2].dist = Math.abs(packman_i-direction[2].index_i) + Math.abs(packman_j-direction[2].index_j);
+
+			//move down 
+			direction[3] = new Object();
+			direction[3].index_i =i_now-1;
+			direction[3].index_j = j_now;
+			direction[3].dist = Math.abs(packman_i-direction[3].index_i) + Math.abs(packman_j-direction[3].index_j);
+
+			let possible_directions = new Array();
+			let possible_dists = new Array();
+			
+			
+			for (let dir = 0; dir< 4; dir++) {
+				if (board[direction[dir].index_i][direction[dir].index_j] !==4){
+					possible_directions.push(dir);
+					possible_dists.push(direction[dir].dist);
+					console.log("possible_dists");
+					console.log(possible_dists);
+				}
+
+			}
+			let min = Math.min.apply(Math, possible_dists);
+			console.log("min is: ");
+			console.log(min);
+
+			let min_index = possible_dists.indexOf(min);
+			
+			console.log("min index is: ");
+			console.log(min_index);
+			//updating monster location
+
+			//updating monster location
+			let good_i = direction[possible_directions[min_index]].index_i;
+			let good_j = direction[possible_directions[min_index]].index_j;
+			console.log("good i: " + good_i);
+			console.log("good j: " + good_j);
+
+			moving_objects_array[index].i =good_i;
+			moving_objects_array[index].j =good_j;
+		}
+
+	}
+	
+}
+
+
+
 
 function UpdatePosition() {
 	board[shape.i][shape.j] = 0;
@@ -646,9 +901,6 @@ function UpdatePosition() {
 			shape.i++;
 		}
 	}
-	// if (board[shape.i][shape.j] == 1) {
-	// 	score++;
-	// }
 	//collision with ball
 	if (board[shape.i][shape.j] == 5) {
 		board[shape.i][shape.j] =0;
@@ -669,27 +921,85 @@ function UpdatePosition() {
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score == 50) {
-		window.clearInterval(interval);
-		window.alert("Game completed");
 
-	//clock colission -=MOR=
-	}
 	if (shape.i===clock_obj.i &&shape.j===clock_obj.j) {
 		//time_elapsed += clock.time_addition(4000);
 		board[clock_obj.i][clock_obj.j] = 0;
 		clock_obj.i= -1;
 		clock_obj.j= -1;
+	
 
 	//collision with cake
 
-	// collision with monster
-
-
+	
+	//console.log("after checking colission with monsters ")
 	} else {
-		Draw();
+
+		// collision with monster - TODO
+		console.log("before checking colission with monsters ")
+		for (var k = 0; k< moving_objects_array.length; k++) {
+
+		console.log("monster limit in loop"+ (monsters_number+1));
+		const curr_object =moving_objects_array[k];
+		const curr_points = curr_object.points;
+		const curr_is_active = curr_object.points;
+		console.log("curr points "+ curr_points);
+
+			if( shape.i=== curr_object.i && shape.j=== curr_object.j){
+				
+				//curr_object.isActive = true;
+				score  = score + curr_points ;
+				//console.log("score");
+				//console.log(score);
+
+				if (score<0){
+					score=0;
+				}
+
+
+
+				if (curr_object.kind ==="monster20"){
+					
+					lives= lives-2;
+					console.log("score");
+					console.log(score);
+
+					if(lives===0||lives<0){
+						Stop();
+						alert("===== LOSER!!! =====");
+					}
+
+				}
+				
+				if(curr_object.kind ==="monster10"){
+					lives= lives-1;
+					if(lives===0||lives<0){
+						Stop();
+						alert("===== LOSER!!! =====");
+					}
+				}
+				
+				for(let index= 0; index<moving_objects_array.length;index++){
+
+					//disappeare moving item
+					moving_objects_array[index].i= moving_objects_array[index].i_origin;
+					moving_objects_array[index].j= moving_objects_array[index].j_origin;
+				}
+				
+				//packman new place
+				var random1 = findRandomEmptyCell(board);
+				board[shape.i][shape.j] =0;
+				shape.i =random1[0];
+				shape.j =random1[1];
+				break;
+
+			}
+		}
+
+			Draw();
+		}
 	}
-}
+
 
 function DisplaySettings(){
 	right_key_pick = document.getElementById('right_key').value;
