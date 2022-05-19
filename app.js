@@ -74,7 +74,7 @@ $(function(){
 function CheckUser(){ //login
 	let username1= document.getElementById("username").value
 	let password1 = document.getElementById("password").value
-	curr_user = {username: username1,password:password1}
+	curr_user = {username: username1, password: password1}
 	let flag = 0 
 	for (var i = 0; i < users_list.length; i++) {
         
@@ -86,7 +86,6 @@ function CheckUser(){ //login
 
 	if (flag === 1){
 		//if valid -  start game - setting page
-		// alert( "validation succeeded" );
 		//location.href="run.html";
 		show_settings_page();
 		ChangeWelcomeUser(username1);
