@@ -193,58 +193,63 @@
 
 															<!------ GAME PAGE ------>
 		<br>
-		<div  id="game_page">
-			<div id="score_time">
-				<div  id="score">
-					<label class = "game_field" for="lblScore">Score:</label>
-					<input class = "game_data" id="lblScore" type="text" />
-				</div>
-				<br>
-				<div  id="time">
-					<label class = "game_field" for="lblTime">Time:</label>
-					<input class = "game_data" id="lblTime" type="text" />
-				</div>
-				<br>
-				<div  id="lives">
-					<label class = "game_field" for="lblLives">Lives:</label>
-					<input class = "game_data" id="lblLives" type="text" />
-				</div>
-			</div>
+		<div id="game_page">
+			<table>
+				<td>
+					<canvas id="canvas" height="750" width="750"></canvas>
+				</td>
+				<td>
+					<div id="LabelsButtonDiv">
+						<img id="newGameButton" src="images/button.png" onclick="show_settings_page()"/>
+						<br><br><br>
+						<div id="score_time">
+							<div  id="score">
+								<label class = "game_field" for="lblScore">Score:</label>
+								<input class = "game_data" id="lblScore" type="text" />
+							</div>
+							<br>
+							<div  id="time">
+								<label class = "game_field" for="lblTime">Time:</label>
+								<input class = "game_data" id="lblTime" type="text" />
+							</div>
+							<br>
+							<div  id="lives">
+								<label class = "game_field" for="lblLives">Lives:</label>
+								<input class = "game_data" id="lblLives" type="text" />
+							</div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div id="gamesettings">
+						<table id="settingstable">
+							<tr>
+								<td colspan="2"><label class="displaysettings">&nbsp;Up Key: <label id="KeyUpDisplay"  aria-readonly="true"></label>&nbsp;</label></td>
+								<td colspan="2"><label class="displaysettings">&nbsp;Down Key: <label id="KeyDownDisplay" aria-readonly="true"></label>&nbsp;</label></td>
+							</tr>
+							<tr>
+								<td colspan="2"><label class="displaysettings">&nbsp;Left Key: <label id="KeyLeftDisplay" aria-readonly="true"></label>&nbsp;</label></td>
+								<td colspan="2"><label class="displaysettings">&nbsp;Right Key: <label id="KeyRightDisplay" aria-readonly="true"></label>&nbsp;</label></td>
+							</tr>
+							<tr>
+								<td colspan="3"><label class="displaysettings">&nbsp;Number of balls: <label id="ballsNum" aria-readonly="true"></label>&nbsp;</label></td>
+							</tr>
+							<tr>
+								<td colspan="3"><label class="displaysettings">&nbsp;Number of monsters: <label id="monstersNum" aria-readonly="true"></label>&nbsp;</label></td>
+							</tr>
+							<tr>
+								<td colspan="3"><label class="displaysettings">&nbsp;Total game time: <label id="gametime" aria-readonly="true"></label>&nbsp;</label></td>
+							</tr>
+							<tr><td><label class="displaysettings">&nbsp;Balls' Colors:&nbsp;</label></td></tr>
+							<tr><td><label id="color5" class="PointsDisplay">&nbsp;5 Points&nbsp;</label></td></tr>
+							<tr><td><label id="color15" class="PointsDisplay">&nbsp;15 Points&nbsp;</label></td></tr>
+							<tr><td><label id="color25" class="PointsDisplay">&nbsp;25 Points&nbsp;</label></td></tr>
+						</table>
+						<br>
+					</div>
+				</td>
+			</table>
 			<br>
-			<div  class= "page" id="game">
-				<canvas id="canvas" height="900" width="900"></canvas>
-			</div>
-			<div id="gamesettings">
-				<table id="settingstable">
-					<tr>
-						<td colspan="2"><label class="displaysettings">Up Key: <label id="KeyUpDisplay"  aria-readonly="true"></label></label></td>
-						<td colspan="2"><label class="displaysettings">Down Key: <label id="KeyDownDisplay" aria-readonly="true"></label></label></td>
-					</tr>
-					<tr>
-						<td colspan="2"><label class="displaysettings">Left Key: <label id="KeyLeftDisplay" aria-readonly="true"></label></label></td>
-						<td colspan="2"><label class="displaysettings">Right Key: <label id="KeyRightDisplay" aria-readonly="true"></label></label></td>
-					</tr>
-					<tr>
-						<td colspan="3"><label class="displaysettings">Number of balls: <label id="ballsNum" aria-readonly="true"></label></label></td>
-					</tr>
-					<tr>
-						<td colspan="3"><label class="displaysettings">Number of monsters: <label id="monstersNum" aria-readonly="true"></label></label></td>
-					</tr>
-					<tr>
-						<td colspan="3"><label class="displaysettings">Total game time: <label id="gametime" aria-readonly="true"></label></label></td>
-					</tr>
-					<tr><td><label class="displaysettings">Balls' Colors:</label></td></tr>
-					<tr><td><label id="color5" class="PointsDisplay">5 Points</label></td></tr>
-					<tr><td><label id="color15" class="PointsDisplay">15 Points</label></td></tr>
-					<tr><td><label id="color25" class="PointsDisplay">25 Points</label></td></tr>
-					<!-- <tr>
-						<td colspan="3"><img id="newGameButton" src="images/button.png" onclick="show_settings_page()"/></td>
-					</tr> -->
-				</table>
-				<div>
-					<img id="newGameButton" src="images/button.png" onclick="show_settings_page()"/>
-				</div>
-			</div>
 		</div>
 		
 		

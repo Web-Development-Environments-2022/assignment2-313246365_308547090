@@ -364,8 +364,6 @@ function Start() {
 			) {
 				board[i][j] = 4;
 			} 
-			
-		
 
 			else {
 
@@ -513,7 +511,7 @@ function Random(){
 	
 
 	up_key = 38;
-	document.getElementById('up_key').value  = "Arrow UP";
+	document.getElementById('up_key').value  = "Arrow Up";
 	
 
 	down_key = 40;
@@ -552,6 +550,8 @@ function getRandomColor() {
 //drawing the canvas, the player and the obstacle
 function Draw() {
 	canvas.width = canvas.width; //clean board
+	// canvas.width = window.innerWidth
+	// canvas.height = window.innerHeight
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblLives.value = lives;
@@ -696,7 +696,6 @@ function DisplaySettings(){
 	left_key_pick = document.getElementById('left_key').value;
 	up_key_pick = document.getElementById('up_key').value;
 	down_key_pick = document.getElementById('down_key').value;
-	console.log(right_key_pick);
 	balls_num_pick = document.getElementById('balls_num').value;
 	time_num_pick = document.getElementById('time_num').value;
 	monsters_num_pick = document.getElementById('monsters_num').value;
@@ -706,7 +705,6 @@ function DisplaySettings(){
 	ball25_color_pick = document.getElementById('ball25_color').value;
 
 	$("#KeyRightDisplay").text(right_key_pick);
-	// document.getElementById('keyRightDisplay').value = right_key_pick;
 	$("#KeyLeftDisplay").text(left_key_pick);
 	$("#KeyUpDisplay").text(up_key_pick);
 	$("#KeyDownDisplay").text(down_key_pick);
