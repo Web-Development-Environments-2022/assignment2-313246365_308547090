@@ -211,7 +211,9 @@ header {
     /* margin-top: -100px; */
     /* padding: 30px; */
     display: flex;
-    position: fixed;
+    /* position: sticky; (recomended) */
+    top: 0px;
+    /* position: fixed;  */
     justify-content: space-around;
     text-align: center;
     background: #5a40ce;

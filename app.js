@@ -56,12 +56,18 @@ $(document).ready(function() {
 	//Start();
 });
 
+$(function(){
+    var dtToday = new Date();
+	var minDate = dtToday.toISOString().substring(0,10);
+	$('#birthdate_r').prop('max', minDate);
+});
+
 
 //========================== INITIALIZATION  ===========================
 
 //monsters_number = document.getElementById("monsters_num").value
 
-//time_elapsed = document.getElementById("time_num).value
+//time_elapsed = document.getElementById("time_num").value
 //========================== functions to header  ===========================
 function CheckUser(){ //login
 	let username1= document.getElementById("username").value
@@ -76,7 +82,7 @@ function CheckUser(){ //login
         
     }
 
-	if (flag===1){
+	if (flag === 1){
 		//if valid -  start game - setting page
 		alert( "validation succeeded" );
 		//location.href="run.html";
@@ -88,7 +94,7 @@ function CheckUser(){ //login
 		show_login_page();
 	}
 	
-	flag =0
+	flag = 0
 
 }
 
@@ -110,7 +116,7 @@ function RegisterUser(){
 	//if password is not containing letters and numbers
 	if (!(password1.match(/([a-zA-Z])/))|| (!password1.match(/([0-9])/)))
 	{
-		alert( "validation failed: password must contain  English letters and numbers only" );
+		alert( "validation failed: password must contain English letters and numbers only" );
 		return 
 	}
 
@@ -137,14 +143,12 @@ function Check_Settings(){
 	let balls_num1 = $('#balls_num').val()
 	let time_num1 = $('#time_num').val()
 
-	//if password is not containing letters and numbers
 	if (balls_num1 <50|| balls_num1>90)
 	{
 		alert( "validation failed: balls number is out of range" );
 		return 
 	}
 
-	//if full name contain numbers
 	if (time_num1<60)
 	{
 		alert( "validation failed: game time is too short" );
@@ -339,7 +343,7 @@ function Start() {
 	DisplaySettings();
 	board = new Array();
 	score = 0;
-	lives = 3;
+	lives = 5;
 	gameMusic.loop = true;
 	pac_color = "yellow";
 	var cnt = 100; //??
