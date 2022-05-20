@@ -12,3 +12,4 @@ The moving cupcake is truly hard to catch but worth 50 score!
 Extras:
 1. The black monster will cost you -2 lives and -20 score.
 2. The clock will give you extra minute to complete the game.
+3. The Donut will give you 1 extra live to survive. 
