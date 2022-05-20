@@ -26,6 +26,7 @@ var height;
 var width;
 var clock_remain = true;
 var clock_obj;
+var donut_obj;
 var interval_cake;
 var monter_interval1;
 var monter_interval2;
@@ -33,6 +34,7 @@ var monster_interval3;
 var monster_interval4;
 var monsters_intervals;
 var clock_flag = false;
+var live_flag = false;
 var food;
 
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
@@ -455,11 +457,18 @@ function Start() {
 	
 	//init object clock and placing it clock = 7
 	clock_obj =new Object();
-	clock_obj.time_addition = 4000;
+	clock_obj.time_addition = 60;
 	emptyCell = findRandomEmptyCell(board);
 	clock_obj.i=emptyCell[0];
 	clock_obj.j = emptyCell[1];
 	console.log("after placing clock");
+
+	//init object donut
+	donut_obj = new Object();
+	donut_obj.live_addition = 1;
+	emptyCell = findRandomEmptyCell(board);
+	donut_obj.i=emptyCell[0];
+	donut_obj.j = emptyCell[1];
 	
 
 	keysDown = {};
@@ -509,6 +518,7 @@ function Stop(){ //Stop game
 	window.clearInterval(interval_cake);
 	window.clearInterval(monsters_intervals);
 	clock_flag = false;
+	live_flag = false;
 	gameMusic.pause();
 	gameMusic.currentTime = 0;
 }
@@ -691,7 +701,12 @@ function Draw() {
 				img_clock.src="images/time.png";
 				context.drawImage(img_clock,center.x - (width/2), center.y - (width/2), width, width);
 			}
-			//draw cake and goests
+			//draw donut
+			else if (i === donut_obj.i && j===donut_obj.j) {
+				var img_donut=new Image();
+				img_donut.src="images/Donut.png";
+				context.drawImage(img_donut,center.x - (width/2), center.y - (width/2), width, width);
+			}
 			
 			// console.log("before cakes and monsters");
 			// console.log((moving_objects_array[0]).i);
@@ -922,6 +937,15 @@ function UpdatePosition() {
 		clock_obj.i= -1;
 		clock_obj.j= -1;
 		clock_flag = true;
+	} 
+	//Donut colission
+	if (shape.i===donut_obj.i && shape.j===donut_obj.j) {
+		lives += 1;
+		lblLives.value += 1;
+		board[donut_obj.i][donut_obj.j] = 0;
+		donut_obj.i= -1;
+		donut_obj.j= -1;
+		donut_obj = true;
 	} 
 	else {
 		// collision with monster
