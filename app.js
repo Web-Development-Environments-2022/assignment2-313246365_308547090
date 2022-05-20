@@ -393,8 +393,6 @@ function Start() {
 	var pacman_remain = 1;
 	start_time = new Date();
 	monsters_number = $('#monsters_num').val();
-
-	console.log("monsters number" +monsters_number);
 	create_moving_objects_array(monsters_number);
 	//init monsters&cake
 	for (var i = 0; i < rows; i++) {
@@ -405,7 +403,7 @@ function Start() {
 			// put walls
 			if ((i == 1 && j == 1) ||
 				(i == 3 && j == 3) ||
-				(i == 3 && j == 4) ||
+				(i === 3 && j === 4) ||
 				(i == 3 && j == 5) ||
 				(i == 6 && j == 1) ||				
 				(i == 6 && j == 2) ) {
@@ -413,8 +411,8 @@ function Start() {
 			} 
 
 			
-			// put walls
-			if ((i == 0) || (j===0) || (i===rows-1)||j===cols-1 ) {
+			// put frame walls
+			if ((i === 0) || (j===0) || (i===rows-1)||j===cols-1 ) {
 				board[i][j] = 4;
 			} 
 			else {

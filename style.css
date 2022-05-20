@@ -205,6 +205,12 @@
     font-family: "Sofia", sans-serif;
 }
 
+#name{
+  font-family: "Sofia", sans-serif;
+  color: white;
+  font-size: 150%;
+}
+
 header {
     width: 100%;
     height:80px;
