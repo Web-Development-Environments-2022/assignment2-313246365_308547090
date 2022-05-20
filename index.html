@@ -27,7 +27,7 @@
 		<a id="Login" onclick="show_login_page()">Login</a>
 		<a id="Register" onclick="show_register_page()">Register</a>
 		<a id="Settings" onclick="show_settings_page()">Settings</a>
-		<a id="About" onclick="openModal()">About</a>
+		<a id="About" onclick="AboutModal()">About</a>
 		<div id="names" style="float: right; color: white; font-family: Sofia, sans-serif; "> Mor Levi & Meital Glick </div>
 		
 	</header>
@@ -189,8 +189,19 @@
 			</form>
 		</form> 			
 	</div>
+												<!------ ABOUT MODAL ------>
+	<div class="about" id="modal_about" role="dialog">
+		<div class="about_content">
+			<span id="spanClose">&times;</span>
+			<h2>Mor Levi & Meital Glick's Eating Cake Pacman! </h2><br>
+			<a>jQuery used: register form and settings requirements.</a><br>
+			<a>We have used designed templates of forms for better UI/UX and uniformity.</a><br>
+			<a>The difficulties we struggled with were the moving entities and the collision with the Pacman. We also had lots of designing issues.</a><br>
+			<img id="dounut" src="images/Dounut.png">
+		</div>
+	</div>
 
-															<!------ GAME PAGE ------>
+												<!------ GAME PAGE ------>
 		<br>
 		<div id="game_page">
 			<table>

@@ -245,6 +245,20 @@ function show_about_page() {
 	document.getElementById('game_page').style.display = "none";
 	document.getElementById('about_page').style.display = "flex";
 }
+// ===================================== Modal About ===========================
+function AboutModal(){
+	let modal = document.getElementById("modal_about");
+	modal.style.display = "block";
+	let span_x = document.getElementById("spanClose");
+	span_x.onclick = function(){ modal.style.display="none"; }; // close by hitting X button
+	window.onclick = function(e){
+		if (e.target === modal){ modal.style.display="none"; } // click anywhere
+	};
+	document.addEventListener('keydown',(e) => {
+		if (e.key === 'Escape') { modal.style.display="none"; } // press Escape
+	});
+}
+
 
 // ===================================== Objects creation ===========================
 

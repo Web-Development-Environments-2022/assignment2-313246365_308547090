@@ -1,6 +1,3 @@
-/* body{
-    background:linear-gradient(to right,#99004D 0%,#ff0080 100%);
-} */
 .welcome_button{
     
     width: 20%;
@@ -258,9 +255,6 @@ header a:hover {
     float: left;
     height:80px;
     margin-left: 1%;
-
- 
-
     
 }
 footer {
@@ -302,8 +296,45 @@ footer {
     -webkit-transform: rotate(45deg);
    
   }
-/* 
-  ===== GAME STYLE ==== */
+/* ===== ABOUT MODAL ==== */
+/* inspired by https://www.w3schools.com/howto/howto_css_modals.asp */
+
+.about{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.about_content {
+  background-color: white;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+}
+
+#spanClose{
+  color: grey;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#spanClose:hover,
+#spanClose:focus {
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ===== GAME STYLE ==== */
 
   /* #canvas{
     width: 800px;
