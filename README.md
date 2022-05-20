@@ -1,3 +1,4 @@
+![TabIcon](https://user-images.githubusercontent.com/81852929/169506590-47b66007-7103-4937-8394-3efdba380744.jpg) 
 # Cake Eating Pacman
 Link to the website: https://web-development-environments-2022.github.io/assignment2-313246365_308547090/
 
