@@ -36,6 +36,14 @@ var monsters_intervals;
 var clock_flag = false;
 var live_flag = false;
 var food;
+var i_now;
+var j_now;
+var img_candy=new Image();
+img_candy.src="images/candy.png";
+var img_clock=new Image();
+img_clock.src="images/time.png";
+var img_donut=new Image();
+img_donut.src="images/Donut.png";
 
 let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
 let winMusic = new Audio('./audio/Win.mp3');
@@ -57,11 +65,11 @@ let ball25_color_pick;
 $(document).ready(function() {
 	context = canvas.getContext("2d");
 	height = (canvas.height)/rows;
-	console.log("height is");
-	console.log(height);
+	// console.log("height is");
+	// console.log(height);
    	width = (canvas.width)/cols;
-   	console.log("width is");
-  	console.log(width);
+   	// console.log("width is");
+  	// console.log(width);
 
 	show_welcome_page();
 	//Start();
@@ -138,7 +146,7 @@ function RegisterUser(){
 	
 
 	users_list.push(new_user)
-	console.log(users_list)
+	// console.log(users_list)
 	show_login_page()
 
 	return
@@ -172,7 +180,7 @@ function Check_Settings(){
 	balls_number = balls_num1
 	start_time = time_num1
 	monsters_number =monsters_num1
-	console.log("settings are good")
+	// console.log("settings are good")
 
 	show_game_page()
 	Start()
@@ -238,15 +246,15 @@ function show_game_page() {
 	//document.getElementById('about_page').style.display = "none";
 }
 
-function show_about_page() {
-	Stop();
-	document.getElementById('welcome_page').style.display = "none";
-	document.getElementById('register_page').style.display = "none";
-	document.getElementById('login_page').style.display = "none";
-	document.getElementById('settings_page').style.display = "none";
-	document.getElementById('game_page').style.display = "none";
-	document.getElementById('about_page').style.display = "flex";
-}
+// function show_about_page() {
+// 	Stop();
+// 	document.getElementById('welcome_page').style.display = "none";
+// 	document.getElementById('register_page').style.display = "none";
+// 	document.getElementById('login_page').style.display = "none";
+// 	document.getElementById('settings_page').style.display = "none";
+// 	document.getElementById('game_page').style.display = "none";
+// 	document.getElementById('about_page').style.display = "flex";
+// }
 // ===================================== Modal About ===========================
 function AboutModal(){
 	let modal = document.getElementById("modal_about");
@@ -287,7 +295,7 @@ function create_moving_objects_array(monsters_number){
 	 //(moving_objects_array[0].image).src = "images/cake.png";
 	 (moving_objects_array[0].image).src = "images/Cupcake.png";
 	 moving_objects_array[0].isActive =true;
-	 console.log("finish create cake");
+	//  console.log("finish create cake");
 
 
 	 let max_index = 1+monsters_number;
@@ -298,9 +306,9 @@ function create_moving_objects_array(monsters_number){
 		moving_objects_array[i].points = -10;
 		moving_objects_array[i].kind = "monster10";
 		moving_objects_array[i].image = new Image();
-		(moving_objects_array[i].image).src = "images/10monster.png";
+		(moving_objects_array[i].image).src = "images/Monster10.png";
 		moving_objects_array[i].isActive =true;
-		console.log("finish create 10monster");
+		// console.log("finish create 10monster");
 		
 		}
 		if(i===2 ||i===4){
@@ -312,7 +320,7 @@ function create_moving_objects_array(monsters_number){
 			moving_objects_array[i].isActive =true;
 			
 		}
-		console.log("finish create 20monster");
+		// console.log("finish create 20monster");
 
 		if(i<max_index){
 
@@ -349,29 +357,29 @@ function create_moving_objects_array(monsters_number){
 
 	
 	let limit = moving_objects_array.length -monsters_number-1 ;
-	console.log("limit is:" + limit);
+	// console.log("limit is:" + limit);
 
 	for (let i = 0; i< limit ; i++) {
 		moving_objects_array.pop();
-		console.log("pop" +i);
+		// console.log("pop" +i);
 
 	}
 
-	console.log("final numbers in moving list"+moving_objects_array.length);
+	// console.log("final numbers in moving list"+moving_objects_array.length);
 }
 // number 1 = food 
 function placeBalls(board){
 	let x = Math.floor(0.6*balls_number);
 	let y = Math.floor(0.3*balls_number);
 	let z = Math.floor(0.1*balls_number);
-	console.log("after x y z")
-	console.log(x)
+	// console.log("after x y z")
+	// console.log(x)
 	
 	// 60% balls of 5 points
 	for (let i = 0; i < x; i++) {
 		//console.log("befor find random")
 		var emptyCell = findRandomEmptyCell(board);
-		console.log("after find random")
+		// console.log("after find random")
 		board[emptyCell[0]][emptyCell[1]] = 5;
 
 	}
@@ -392,7 +400,7 @@ function placeBalls(board){
 		board[emptyCell[0]][emptyCell[1]] = 25;
 
 	}
-	console.log("finish place balls")
+	// console.log("finish place balls")
 	return;
 }
 //===================================== Start Game ===============================
@@ -414,23 +422,21 @@ function Start() {
 	for (var i = 0; i < rows; i++) {
 		board[i] = new Array();
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < cols; j++) {
-
-			// put walls
-			if ((i == 1 && j == 1) ||
-				(i == 3 && j == 3) ||
-				(i === 3 && j === 4) ||
-				(i == 3 && j == 5) ||
-				(i == 6 && j == 1) ||				
-				(i == 6 && j == 2) ) {
+		for (var j = 0; j < cols; j++) { // put walls
+			if ((i == 3 && j == 4) || (i == 3 && j == 3) || (i == 4 && j == 3) || (i == 5 && j == 3) || (i == 5 && j == 4) ||
+			(i == 10 && j == 1) || (i == 10 && j == 2) || (i == 10 && j == 17) || (i == 10 && j == 18) ||
+			(i == 14 && j == 3) || (i == 15 && j == 3) || (i == 16 && j == 3) || (i == 17 && j == 3) || (i == 17 && j == 2) ||
+			(i == 4 && j == 8) || (i == 4 && j == 9) || (i == 4 && j == 10) || (i == 4 && j == 11) || (i == 4 && j == 12) ||
+			(i == 17 && j == 7) || (i == 17 && j == 8) || (i == 17 && j == 9) || (i == 17 && j == 10) || (i == 17 && j == 11) || (i == 17 && j == 12) || (i == 17 && j == 13) ||
+			(i == 3 && j == 16) || (i == 4 && j == 16) ||
+			(i == 14 && j == 16) || (i == 15 && j == 16) || (i == 16 && j == 16) || (i == 17 && j == 16) || (i == 17 && j == 17) ||
+			(i == 8 && j == 8) || (i == 9 && j == 8) || (i == 10 && j == 8) || (i == 11 && j == 8) || (i == 12 && j == 8) || (i == 12 && j == 9) || (i == 12 && j == 10) ||
+			(i == 8 && j == 12) || (i == 9 && j == 12) || (i == 10 && j == 12) || (i == 11 && j == 12) || (i == 12 && j == 12) || (i == 8 && j == 10) || (i == 8 && j == 11) ||
+			(i === 0) || (j===0) || (i===rows-1)|| (j===cols-1)
+			) {
+			// if ((i == 3 && j == 4) || (i == 3 && j == 3) || (i == 4 && j == 3)){
 				board[i][j] = 4;
-			} 
-
-			
-			// put frame walls
-			if ((i === 0) || (j===0) || (i===rows-1)||j===cols-1 ) {
-				board[i][j] = 4;
-			} 
+			}
 			else {
 				//putting balls on board 
 				var randomNum = Math.random();
@@ -449,7 +455,7 @@ function Start() {
 
 	//placing pacman
 	var emptyCell = findRandomEmptyCell(board);
-	console.log("after find random")
+	// console.log("after find random")
 	board[emptyCell[0]][emptyCell[1]] = 2;
 	shape.i=emptyCell[0];
 	shape.j = emptyCell[1];
@@ -461,7 +467,7 @@ function Start() {
 	emptyCell = findRandomEmptyCell(board);
 	clock_obj.i=emptyCell[0];
 	clock_obj.j = emptyCell[1];
-	console.log("after placing clock");
+	// console.log("after placing clock");
 
 	//init object donut
 	donut_obj = new Object();
@@ -498,18 +504,16 @@ function Start() {
 		},
 		false
 	);
+	
 	interval = setInterval(UpdatePosition, 250);
 	interval_cake = setInterval(UpdateCakePosition, 450);
+	console.log(board);
 
 	monsters_intervals =new Array();
-	
-	console.log("monsters_number");
-	console.log(monsters_number);
 	
 	//for (let index = 1; index < monsters_number+1; index++) {
 		
 	monsters_intervals = setInterval(UpdateMonsterPosition, 900);
-	console.log("interval monster number" );
 	gameMusic.play();
 }
 
@@ -639,9 +643,7 @@ function Draw() {
 			center.x = i * width + width/2;
 			center.y = j * height + height/2;
 
-
-
-			//packman?
+			//pacman
 			if (board[i][j] == 2) {
 				context.beginPath();
 				context.arc(center.x, center.y, width/2, (0.1+0.5*(pac_side-1)) * Math.PI, (1.8 + 0.5 * (pac_side-1)) * Math.PI); // half circle
@@ -684,27 +686,15 @@ function Draw() {
 				context.fill();
 
 			//wall
-			} else if (board[i][j] == 4) {
-
-				var img_candy=new Image();
-		
-				img_candy.src="images/candy.jpg";
-				
-				context.drawImage(img_candy,center.x - (width/2), center.y - (width/2), width, width);
-
-			
-			
+			} else if (board[i][j] === 4) {
+				// context.drawImage(img_candy,center.x - (width/2), center.y - (width/2), width, width);
 			} 
 			//draw clock
 			else if (i === clock_obj.i && j===clock_obj.j) {
-				var img_clock=new Image();
-				img_clock.src="images/time.png";
 				context.drawImage(img_clock,center.x - (width/2), center.y - (width/2), width, width);
 			}
 			//draw donut
 			else if (i === donut_obj.i && j===donut_obj.j) {
-				var img_donut=new Image();
-				img_donut.src="images/Donut.png";
 				context.drawImage(img_donut,center.x - (width/2), center.y - (width/2), width, width);
 			}
 			
@@ -716,7 +706,7 @@ function Draw() {
 			for (let k = 0; k<moving_objects_array.length ; k++) {
 				const curr_object =moving_objects_array[k];
 
-				if( i=== curr_object.i && j=== curr_object.j ){
+				if( curr_object.i === i && curr_object.j === j ){
 
 					//if( curr_object.isActive === true){
 					context.drawImage(curr_object.image,center.x - (width/2), center.y - (width/2), width, width);
@@ -738,13 +728,13 @@ function Draw() {
 function UpdateCakePosition(){
 
 	
-	let i_now = moving_objects_array[0].i;
-	let j_now = moving_objects_array[0].j;
-	if(i_now !==-1 && j_now !==-1){
-		let move_right = [i_now,j_now+1];
-		let move_left = [i_now,j_now-1];
-		let move_up = [1+i_now,j_now];
-		let move_down = [i_now-1,j_now];
+	let i_curr = moving_objects_array[0].i;
+	let j_curr = moving_objects_array[0].j;
+	if(i_curr !==-1 && j_curr !==-1){
+		let move_right = [i_curr,j_curr+1];
+		let move_left = [i_curr,j_curr-1];
+		let move_up = [1+i_curr,j_curr];
+		let move_down = [i_curr-1,j_curr];
 		
 		let random_dir = Math.floor(Math.random() * 4 + 1);
 		let direction;
@@ -782,18 +772,21 @@ function UpdateCakePosition(){
 function UpdateMonsterPosition(){
 
 	for (let index = 1; index < monsters_number +1 ; index++){	
-		// let curr_obj = moving_objects_array[index];
-		// if(curr_obj.i !== -1 && curr_obj.j == -1){
-		if(moving_objects_array[index].isActive ===true){
+		// var curr_obj = moving_objects_array[index];
+		i_now = moving_objects_array[index].i;
+		j_now = moving_objects_array[index].j;
+		console.log("i_now " + i_now);
+		console.log(j_now);
+		console.log(moving_objects_array[index])
+		if(i_now !== -1 && j_now !== -1){
+		// if(moving_objects_array[index].isActive ===true){
 			console.log ("START - UpdateMonsterPosition");
 			let packman_i= shape.i;
 			let packman_j= shape.j;
-			let i_now = moving_objects_array[index].i;
-			let j_now = moving_objects_array[index].j;
-			console.log("i_now is: ")
-			console.log(i_now);
-			console.log("j_now is: ")
-			console.log(j_now);
+			// console.log("i_now is: ")
+			// console.log(i_now);
+			// console.log("j_now is: ")
+			// console.log(j_now);
 
 			let direction= new Array();
 			//move right
@@ -828,26 +821,26 @@ function UpdateMonsterPosition(){
 				if (board[direction[dir].index_i][direction[dir].index_j] !==4){
 					possible_directions.push(dir);
 					possible_dists.push(direction[dir].dist);
-					console.log("possible_dists");
-					console.log(possible_dists);
+					// console.log("possible_dists");
+					// console.log(possible_dists);
 				}
 
 			}
 			let min = Math.min.apply(Math, possible_dists);
-			console.log("min is: ");
-			console.log(min);
+			// console.log("min is: ");
+			// console.log(min);
 
 			let min_index = possible_dists.indexOf(min);
 			
-			console.log("min index is: ");
-			console.log(min_index);
+			// console.log("min index is: ");
+			// console.log(min_index);
 			//updating monster location
 
 			//updating monster location
 			let good_i = direction[possible_directions[min_index]].index_i;
 			let good_j = direction[possible_directions[min_index]].index_j;
-			console.log("good i: " + good_i);
-			console.log("good j: " + good_j);
+			// console.log("good i: " + good_i);
+			// console.log("good j: " + good_j);
 
 			moving_objects_array[index].i =good_i;
 			moving_objects_array[index].j =good_j;
@@ -907,13 +900,13 @@ function UpdatePosition() {
 	if (food <= 0){
 		Stop();
 		winMusic.play();
-		setTimeout(function() {alert("Winner!!!")}, 500)
+		setTimeout(function() {alert("Winner!!!")}, 500);
 	}
 
 	//time is over
 	var currentTime = new Date();
 	time_elapsed = Math.round(time_num_pick-(currentTime - start_time) / 1000);
-	if (clock_flag === true){
+	if (clock_flag === true){ // clock was eaten
 		time_elapsed += 60;
 	}
 	if (score <= 20 && time_elapsed <= 10) {
@@ -924,14 +917,14 @@ function UpdatePosition() {
 		alert("You are better than " + score + " points!")
 	}
 	if (time_elapsed <= 0 && score >= 100) {
-		winMusic.play();
 		Stop();
-		alert("Winner!!!")
+		winMusic.play();
+		setTimeout(function() {alert("Winner!!!")}, 500);
 
 	}
 	//clock colission
 	if (shape.i===clock_obj.i && shape.j===clock_obj.j) {
-		time_elapsed += 60;
+		// time_elapsed += 60;
 		lblTime.value = time_elapsed;
 		board[clock_obj.i][clock_obj.j] = 0;
 		clock_obj.i= -1;
@@ -949,7 +942,7 @@ function UpdatePosition() {
 	} 
 	else {
 		// collision with monster
-		console.log("before checking colission with monsters ")
+		// console.log("before checking colission with monsters ")
 		
 		for (var k = 0; k< moving_objects_array.length; k++) {
 			const curr_object =moving_objects_array[k];
@@ -968,8 +961,8 @@ function UpdatePosition() {
 				}
 				if (curr_object.kind ==="monster20"){
 					lives= lives-2;
-					console.log("score");
-					console.log(score);
+					// console.log("score");
+					// console.log(score);
 					if(lives===0||lives<0){
 						Stop();
 						alert("===== LOSER!!! =====");
@@ -984,11 +977,11 @@ function UpdatePosition() {
 					}
 				}
 				
-				//hit by monsters only - update packman and minsters place
+				//hit by monsters only - update pacman and minsters place
 				if(k!==0){
 					for(let index= 1; index<moving_objects_array.length;index++){
 
-						//disappeare moving item
+						//disappear moving item
 						moving_objects_array[index].i= moving_objects_array[index].i_origin;
 						moving_objects_array[index].j= moving_objects_array[index].j_origin;
 					}
