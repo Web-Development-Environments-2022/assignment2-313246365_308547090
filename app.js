@@ -44,10 +44,10 @@ var img_clock=new Image();
 img_clock.src="images/time.png";
 var img_donut=new Image();
 img_donut.src="images/Donut.png";
-
-let gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
-let winMusic = new Audio('./audio/Win.mp3');
-
+var center = new Object();
+var gameMusic = new Audio('./audio/DNCE - Cake By The Ocean.mp3');
+var winMusic = new Audio('./audio/Win.mp3');
+var direction= new Array();
 //Real value for variables after pick or random
 let right_key_pick;
 let left_key_pick;
@@ -411,43 +411,45 @@ function Start() {
 	lives = 5;
 	gameMusic.loop = true;
 	pac_color = "yellow";
-	var cnt = 100; //??
-	var food_remain = balls_number;
+	// var cnt = 100; //??
+	// var food_remain = balls_number;
 	food = balls_num_pick;
 	var pacman_remain = 1;
 	start_time = new Date();
 	monsters_number = $('#monsters_num').val();
-	create_moving_objects_array(monsters_number);
-	//init monsters&cake
-	for (var i = 0; i < rows; i++) {
-		board[i] = new Array();
-		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
-		for (var j = 0; j < cols; j++) { // put walls
-			if ((i == 3 && j == 4) || (i == 3 && j == 3) || (i == 4 && j == 3) || (i == 5 && j == 3) || (i == 5 && j == 4) ||
-			(i == 10 && j == 1) || (i == 10 && j == 2) || (i == 10 && j == 17) || (i == 10 && j == 18) ||
-			(i == 14 && j == 3) || (i == 15 && j == 3) || (i == 16 && j == 3) || (i == 17 && j == 3) || (i == 17 && j == 2) ||
-			(i == 4 && j == 8) || (i == 4 && j == 9) || (i == 4 && j == 10) || (i == 4 && j == 11) || (i == 4 && j == 12) ||
-			(i == 17 && j == 7) || (i == 17 && j == 8) || (i == 17 && j == 9) || (i == 17 && j == 10) || (i == 17 && j == 11) || (i == 17 && j == 12) || (i == 17 && j == 13) ||
-			(i == 3 && j == 16) || (i == 4 && j == 16) ||
-			(i == 14 && j == 16) || (i == 15 && j == 16) || (i == 16 && j == 16) || (i == 17 && j == 16) || (i == 17 && j == 17) ||
-			(i == 8 && j == 8) || (i == 9 && j == 8) || (i == 10 && j == 8) || (i == 11 && j == 8) || (i == 12 && j == 8) || (i == 12 && j == 9) || (i == 12 && j == 10) ||
-			(i == 8 && j == 12) || (i == 9 && j == 12) || (i == 10 && j == 12) || (i == 11 && j == 12) || (i == 12 && j == 12) || (i == 8 && j == 10) || (i == 8 && j == 11) ||
-			(i === 0) || (j===0) || (i===rows-1)|| (j===cols-1)
-			) {
-			// if ((i == 3 && j == 4) || (i == 3 && j == 3) || (i == 4 && j == 3)){
+	create_moving_objects_array(monsters_number); //init monsters&cake
+	
+	let walls = ["3 3","4 3","5 3","6 3","6 4","14 3","15 3","16 3","17 3","17 2","4 8","4 9","4 10","4 11","4 12","17 7","17 8","17 9","17 10","17 11","17 12","17 13",
+				"3 16","4 16","5 16","6 16","6 15","14 16","15 16","16 16","17 16","17 17","8 8","9 8","10 8","11 8","12 8","12 9","12 10","8 12","9 12","10 12","11 12","12 12","8 10","8 11"];
+	for (var i = 0; i < cols; i++) {
+		board[i] = [];
+		//put walls
+		for (var j = 0; j < rows; j++) { // put walls
+			// if ((i == 3 && j == 3) || (i == 4 && j == 3) || (i == 5 && j == 3) || (i == 6 && j == 3) || (i == 6 && j == 4) ||
+			// (i == 10 && j == 1) || (i == 10 && j == 2) || (i == 10 && j == 17) || (i == 10 && j == 18) ||
+			// (i == 14 && j == 3) || (i == 15 && j == 3) || (i == 16 && j == 3) || (i == 17 && j == 3) || (i == 17 && j == 2) ||
+			// (i == 4 && j == 8) || (i == 4 && j == 9) || (i == 4 && j == 10) || (i == 4 && j == 11) || (i == 4 && j == 12) ||
+			// (i == 17 && j == 7) || (i == 17 && j == 8) || (i == 17 && j == 9) || (i == 17 && j == 10) || (i == 17 && j == 11) || (i == 17 && j == 12) || (i == 17 && j == 13) ||
+			// (i == 3 && j == 16) || (i == 4 && j == 16) || (i == 5 && j == 16) || (i == 6 && j == 16) || (i == 6 && j == 15)
+			// (i == 14 && j == 16) || (i == 15 && j == 16) || (i == 16 && j == 16) || (i == 17 && j == 16) || (i == 17 && j == 17) ||
+			// (i == 8 && j == 8) || (i == 9 && j == 8) || (i == 10 && j == 8) || (i == 11 && j == 8) || (i == 12 && j == 8) || (i == 12 && j == 9) || (i == 12 && j == 10) ||
+			// (i == 8 && j == 12) || (i == 9 && j == 12) || (i == 10 && j == 12) || (i == 11 && j == 12) || (i == 12 && j == 12) || (i == 8 && j == 10) || (i == 8 && j == 11)
+			// ) {
+			if (walls.includes(j + " " + i) || (i === 0) || (j===0) || (i===cols-1)|| (j===rows-1)){
 				board[i][j] = 4;
 			}
 			else {
-				//putting balls on board 
-				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food_remain) / cnt) {
-					food_remain--;
-					board[i][j] = 1;
-				}
-				else {
-					board[i][j] = 0;
-				}
-				cnt--;
+				board[i][j] = 0;
+				// //putting balls on board 
+				// var randomNum = Math.random();
+				// if (randomNum <= (1.0 * food_remain) / cnt) {
+				// 	food_remain--;
+				// 	board[i][j] = 1;
+				// }
+				// else {
+				// 	board[i][j] = 0;
+				// }
+				// cnt--;
 			}
 		}
 	}
@@ -513,7 +515,7 @@ function Start() {
 	
 	//for (let index = 1; index < monsters_number+1; index++) {
 		
-	monsters_intervals = setInterval(UpdateMonsterPosition, 900);
+	monsters_intervals = setInterval(UpdateMonsterPosition, 700);
 	gameMusic.play();
 }
 
@@ -639,7 +641,7 @@ function Draw() {
 	for (var i = 0; i < rows; i++) {
 		for (var j = 0; j < cols; j++) {
 			
-			var center = new Object();
+			
 			center.x = i * width + width/2;
 			center.y = j * height + height/2;
 
@@ -687,7 +689,7 @@ function Draw() {
 
 			//wall
 			} else if (board[i][j] === 4) {
-				// context.drawImage(img_candy,center.x - (width/2), center.y - (width/2), width, width);
+				context.drawImage(img_candy,center.x - (width/2), center.y - (width/2), width, width);
 			} 
 			//draw clock
 			else if (i === clock_obj.i && j===clock_obj.j) {
@@ -736,10 +738,11 @@ function UpdateCakePosition(){
 		let move_up = [1+i_curr,j_curr];
 		let move_down = [i_curr-1,j_curr];
 		
-		let random_dir = Math.floor(Math.random() * 4 + 1);
+		let random_dir;
 		let direction;
 		let stop= false;
 		while(stop===false){
+			random_dir = Math.floor(Math.random() * 4 + 1);
 			switch (random_dir) {
 				case 1:
 					direction = move_right;
@@ -763,21 +766,23 @@ function UpdateCakePosition(){
 		moving_objects_array[0].i= direction[0];
 		moving_objects_array[0].j= direction[1];
 
-		return direction;
+		// return direction;
 	}
-	return
+	// return
 }
 
 
 function UpdateMonsterPosition(){
 
-	for (let index = 1; index < monsters_number +1 ; index++){	
+	for (let index = 1; index <= monsters_number ; index++){	
 		// var curr_obj = moving_objects_array[index];
+		console.log(monsters_number)
+		console.log(index)
 		i_now = moving_objects_array[index].i;
 		j_now = moving_objects_array[index].j;
 		console.log("i_now " + i_now);
 		console.log(j_now);
-		console.log(moving_objects_array[index])
+		console.log(board)
 		if(i_now !== -1 && j_now !== -1){
 		// if(moving_objects_array[index].isActive ===true){
 			console.log ("START - UpdateMonsterPosition");
@@ -788,7 +793,7 @@ function UpdateMonsterPosition(){
 			// console.log("j_now is: ")
 			// console.log(j_now);
 
-			let direction= new Array();
+			
 			//move right
 			direction[0] = new Object();
 			direction[0].index_i = i_now;
@@ -840,7 +845,7 @@ function UpdateMonsterPosition(){
 			let good_i = direction[possible_directions[min_index]].index_i;
 			let good_j = direction[possible_directions[min_index]].index_j;
 			// console.log("good i: " + good_i);
-			// console.log("good j: " + good_j);
+			console.log("good j: " + good_j);
 
 			moving_objects_array[index].i =good_i;
 			moving_objects_array[index].j =good_j;
@@ -947,7 +952,7 @@ function UpdatePosition() {
 		for (var k = 0; k< moving_objects_array.length; k++) {
 			const curr_object =moving_objects_array[k];
 			const curr_points = curr_object.points;
-			const curr_is_active = curr_object.points;
+			// const curr_is_active = curr_object.points;
 
 			if( shape.i=== curr_object.i && shape.j=== curr_object.j){
 				if(k===0){
